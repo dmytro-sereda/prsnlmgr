@@ -1,5 +1,9 @@
 import styled, { createGlobalStyle } from "styled-components";
 
+interface InputProps {
+  isError?: string | undefined;
+}
+
 export default createGlobalStyle`
     *{
         margin: 0;
@@ -45,6 +49,7 @@ export const Input = styled.input`
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
+  ${(props: InputProps) => props.isError && "border: 1px solid #e80000;"}
 
   &:focus-visible {
     outline: solid #281e42 1px;
@@ -81,6 +86,7 @@ export const Select = styled.select`
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
+  ${(props: InputProps) => props.isError && "border: 1px solid #e80000;"}
 
   &:focus-visible {
     outline: solid #281e42 1px;
@@ -124,4 +130,10 @@ export const RequiredText = styled.p`
   color: #635784;
   font-size: 20px;
   margin-top: 10px;
+`;
+
+export const ErrorMessage = styled.p`
+  color: #e80000;
+  margin-top: 5px;
+  font-size: 17px;
 `;
