@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Header from "./components/header/header.component";
 import GlobaStyle, {
@@ -22,7 +22,14 @@ const App: React.FC = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      dispatch(updateUserObject(user));
+      // dispatch(updateUserObject(user));
+      if (user) {
+        dispatch(
+          updateUserObject({ userID: user.uid, email: user.email || "" })
+        );
+      } else {
+        dispatch(updateUserObject(null));
+      }
     });
     // eslint-disable-next-line
   }, []);
@@ -36,7 +43,7 @@ const App: React.FC = () => {
           <Header />
           <Routes>
             <Route
-              path="/"
+              path="/createEntry"
               element={
                 <ProtectedRoute
                   user={currentUser}
@@ -48,9 +55,25 @@ const App: React.FC = () => {
               }
             />
             <Route
+              path="/entries"
+              element={
+                <ProtectedRoute
+                  user={currentUser}
+                  redirectTo="/login"
+                  type="app"
+                >
+                  <div>Entries</div>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="login"
               element={
-                <ProtectedRoute redirectTo="/" user={currentUser} type="auth">
+                <ProtectedRoute
+                  redirectTo="/createEntry"
+                  user={currentUser}
+                  type="auth"
+                >
                   <LoginPage />
                 </ProtectedRoute>
               }
@@ -58,11 +81,16 @@ const App: React.FC = () => {
             <Route
               path="signup"
               element={
-                <ProtectedRoute redirectTo="/" user={currentUser} type="auth">
+                <ProtectedRoute
+                  redirectTo="/createEntry"
+                  user={currentUser}
+                  type="auth"
+                >
                   <SignupPage />
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<Navigate to="/createEntry" replace />} />
           </Routes>
         </ApplicationRightSideContainer>
       </ApplicationContainer>

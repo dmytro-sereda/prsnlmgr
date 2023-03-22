@@ -1,9 +1,9 @@
 import React from "react";
-import { User as FirebaseUser } from "firebase/auth";
 import { Navigate } from "react-router";
+import { UserObject } from "../../redux/user/user.reducer";
 
 interface Props {
-  user: FirebaseUser | null;
+  user: UserObject;
   children: any;
   redirectTo: string;
   type: "auth" | "app";

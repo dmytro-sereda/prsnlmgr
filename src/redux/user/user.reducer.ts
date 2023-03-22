@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User as FirebaseUser } from "firebase/auth";
+// import { User as FirebaseUser } from "firebase/auth";
 
-const initialState: { userObject: FirebaseUser | null } = {
+export type UserObject = { userID: string; email: string } | null;
+
+interface UserState {
+  userObject: UserObject;
+}
+
+const initialState: UserState = {
   userObject: null,
 };
 
@@ -9,7 +15,7 @@ const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    updateUserObject(state, action: PayloadAction<FirebaseUser | null>) {
+    updateUserObject(state, action: PayloadAction<UserObject>) {
       state.userObject = action.payload;
     },
   },

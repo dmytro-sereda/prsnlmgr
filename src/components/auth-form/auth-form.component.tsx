@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  AuthFormButton,
-  AuthFormContainer,
-  Input,
-  InputContainer,
-  Label,
-  SignUpTextContainer,
-} from "./auth-form.styles";
+import { Input, InputContainer, Label, PrimaryButton } from "../../global";
+import { AuthFormContainer, SignUpTextContainer } from "./auth-form.styles";
 
 interface Props {
   handleFormSubmit: (
@@ -53,9 +47,9 @@ const AuthForm: React.FC<Props> = ({ handleFormSubmit, type }) => {
       </InputContainer>
 
       {type === "login" ? (
-        <AuthFormButton>Log in</AuthFormButton>
+        <PrimaryButton>Log in</PrimaryButton>
       ) : (
-        <AuthFormButton>Sign up</AuthFormButton>
+        <PrimaryButton>Sign up</PrimaryButton>
       )}
       <SignUpTextContainer>
         {type === "login" ? (

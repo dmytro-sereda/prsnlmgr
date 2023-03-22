@@ -6,7 +6,7 @@ export default createGlobalStyle`
         padding: 0;
         outline:0;
         box-sizing:border-box;
-        font-family: 'Arial', sans-serif; 
+        font-family: 'Inter', sans-serif;
     }
 
     #root{
@@ -31,8 +31,97 @@ export const ApplicationRightSideContainer = styled.div`
   width: 100%;
 `;
 
+export const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 15px;
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  border: 1px solid #281e42;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+
+  &:focus-visible {
+    outline: solid #281e42 1px;
+  }
+`;
+
+export const Label = styled.label`
+  font-size: 20px;
+  color: #281e42;
+  font-weight: 400;
+`;
+
 export const Heading2 = styled.h2`
   font-weight: 700;
   font-size: 40px;
   color: #281e42;
+`;
+
+export const Heading3 = styled.h3`
+  font-weight: 700;
+  font-size: 30px;
+  color: #281e42;
+`;
+
+export const PageContainer = styled.div`
+  text-align: left;
+  padding: 44px 32px;
+`;
+
+export const Select = styled.select`
+  width: 100%;
+  border: 1px solid #281e42;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+
+  &:focus-visible {
+    outline: solid #281e42 1px;
+  }
+`;
+
+export const Textarea = styled.textarea`
+  width: 100%;
+  border: 1px solid #281e42;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 18px;
+  margin-top: 10px;
+
+  &:focus-visible {
+    outline: solid #281e42 1px;
+  }
+`;
+
+export const PrimaryButton = styled.button`
+  width: 100%;
+  border: 0;
+  background-color: #f0a6ca;
+  font-size: 25px;
+  color: #281e42;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 10px;
+
+  &:focus-visible {
+    outline: solid #281e42 3px;
+  }
+`;
+
+export const RequiredStar = styled.span`
+  color: #635784;
+`;
+
+export const RequiredText = styled.p`
+  color: #635784;
+  font-size: 20px;
+  margin-top: 10px;
 `;
