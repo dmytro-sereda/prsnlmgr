@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import helpersReducer from "./helpers/helpers.reducer";
 import userReducer from "./user/user.reducer";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    helpers: helpersReducer,
   },
   devTools: (process.env.NODE_ENV as string) === "production" ? false : true,
 });

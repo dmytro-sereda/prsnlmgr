@@ -15,9 +15,12 @@ import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import { selectUserEntity } from "./redux/user/user.selectors";
 import { updateUserObject } from "./redux/user/user.reducer";
 import ProtectedRoute from "./components/protected-route/protected-route.component";
+import Popup from "./components/popup/popup.component";
+import { selectIsPopupActive } from "./redux/helpers/helpers.selector";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
+  const isPopupActive = useAppSelector(selectIsPopupActive);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -37,6 +40,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <GlobaStyle />
+      {isPopupActive && <Popup />}
       <ApplicationContainer>
         {currentUser && <Sidebar />}
         <ApplicationRightSideContainer>

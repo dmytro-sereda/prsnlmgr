@@ -11,8 +11,8 @@ const initialState: UserState = {
   userObject: null,
 };
 
-const formSlice = createSlice({
-  name: "form",
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
     updateUserObject(state, action: PayloadAction<UserObject>) {
@@ -21,6 +21,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { updateUserObject } = formSlice.actions;
+export const { updateUserObject } = userSlice.actions;
 
-export default formSlice.reducer;
+export default userSlice.reducer;

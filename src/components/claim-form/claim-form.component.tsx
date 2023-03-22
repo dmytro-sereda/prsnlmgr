@@ -10,6 +10,11 @@ import {
   Select,
   Textarea,
 } from "../../global";
+import {
+  updateIsPopupActive,
+  updatePopup,
+} from "../../redux/helpers/helpers.reducer";
+import { useAppDispatch } from "../../utils/hooks";
 import { ClaimErrors } from "../../utils/interfaces";
 import { ClaimFormContainer } from "./claim-form.styles";
 
@@ -22,6 +27,9 @@ const ClaimForm: React.FC = () => {
     additionalInfo: "",
   });
   const [claimErrors, setClaimErrors] = useState<ClaimErrors>({});
+
+  // GLOBAL STATE
+  const dispatch = useAppDispatch();
 
   const handleInputAndSelect = (
     e: React.ChangeEvent<
@@ -58,6 +66,18 @@ const ClaimForm: React.FC = () => {
 
       // Write to db
 
+      // Display the popup
+      dispatch(
+        updatePopup({
+          isError: false,
+          isPopupActive: true,
+          message: "✅ Claim successfully added",
+        })
+      );
+      setTimeout(() => {
+        dispatch(updateIsPopupActive(false));
+      }, 3000);
+
       // Clear input fields
       setClaim({
         itemName: "",
@@ -69,6 +89,16 @@ const ClaimForm: React.FC = () => {
     } catch (err) {
       // Render errors
       setClaimErrors(errors);
+      dispatch(
+        updatePopup({
+          isError: true,
+          isPopupActive: true,
+          message: "💥 Please fix the errors above",
+        })
+      );
+      setTimeout(() => {
+        dispatch(updateIsPopupActive(false));
+      }, 3000);
       // Render popup
     }
   };
