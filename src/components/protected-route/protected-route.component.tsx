@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router";
-import { UserObject } from "../../redux/user/user.reducer";
+import { UserObject } from "../../utils/interfaces";
 
 interface Props {
   user: UserObject;

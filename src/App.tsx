@@ -17,6 +17,7 @@ import { updateUserObject } from "./redux/user/user.reducer";
 import ProtectedRoute from "./components/protected-route/protected-route.component";
 import Popup from "./components/popup/popup.component";
 import { selectIsPopupActive } from "./redux/helpers/helpers.selector";
+import ViewEntries from "./pages/view-entries/view-entries.component";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -66,7 +67,7 @@ const App: React.FC = () => {
                   redirectTo="/login"
                   type="app"
                 >
-                  <div>Entries</div>
+                  <ViewEntries></ViewEntries>
                 </ProtectedRoute>
               }
             />

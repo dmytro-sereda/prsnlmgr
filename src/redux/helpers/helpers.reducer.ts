@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HelpersState, Popup } from "../../utils/interfaces";
 
-interface Popup {
-  isPopupActive: boolean;
-  isError: boolean;
-  message: string;
-}
-
-const initialState = {
+const initialState: HelpersState = {
   popup: {
     isPopupActive: false,
     isError: false,

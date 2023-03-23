@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SidebarContainer = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   max-width: 420px;
   width: 100%;
   background-image: linear-gradient(115deg, #201639, #635784);

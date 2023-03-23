@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { number, object, string } from "yup";
 import {
   ErrorMessage,
   Input,
@@ -16,6 +15,7 @@ import {
 } from "../../redux/helpers/helpers.reducer";
 import { useAppDispatch } from "../../utils/hooks";
 import { ClaimErrors } from "../../utils/interfaces";
+import { schemaFactory } from "../../utils/schemaFactory";
 import { ClaimFormContainer } from "./claim-form.styles";
 
 const ClaimForm: React.FC = () => {
@@ -45,20 +45,7 @@ const ClaimForm: React.FC = () => {
 
     // Validate input fields
     const errors: ClaimErrors = {};
-    const claimSchema = object({
-      itemName: string().required(() => {
-        errors.itemName = "Item name is required";
-      }),
-      amountPaid: number().moreThan(0, () => {
-        errors.amountPaid = "Amount paid must be a positive number";
-      }),
-      date: string().required(() => {
-        errors.date = "Date must be selected";
-      }),
-      category: string().required(() => {
-        errors.category = "Category must be selected";
-      }),
-    });
+    const claimSchema = schemaFactory(errors);
 
     try {
       await claimSchema.validate(claim, { abortEarly: false });
