@@ -9,10 +9,7 @@ import {
   Select,
   Textarea,
 } from "../../global";
-import {
-  updateIsPopupActive,
-  updatePopup,
-} from "../../redux/helpers/helpers.reducer";
+import { updatePopup } from "../../redux/helpers/helpers.reducer";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { ClaimErrors } from "../../utils/interfaces";
 import { schemaFactory } from "../../utils/schemaFactory";
@@ -42,11 +39,6 @@ const ClaimForm: React.FC = () => {
     >
   ) => {
     const { name, value } = e.currentTarget;
-    if (name === "date") {
-      const timeStamp = new Date(value).getTime();
-      setClaim({ ...claim, date: timeStamp });
-      return;
-    }
     setClaim({ ...claim, [name]: value });
   };
 
@@ -67,6 +59,8 @@ const ClaimForm: React.FC = () => {
       // Write to db
       set(ref(db, `/entries/${user?.userID}/${entryId}`), {
         ...claim,
+        date: new Date(claim.date).getTime(),
+        amountPaid: +claim.amountPaid,
         id: entryId,
       });
 
@@ -90,9 +84,6 @@ const ClaimForm: React.FC = () => {
           message: "✅ Claim successfully added",
         })
       );
-      setTimeout(() => {
-        dispatch(updateIsPopupActive(false));
-      }, 3000);
 
       // Clear input fields
       setClaim({
@@ -112,9 +103,6 @@ const ClaimForm: React.FC = () => {
           message: "💥 Please fix the errors above",
         })
       );
-      setTimeout(() => {
-        dispatch(updateIsPopupActive(false));
-      }, 3000);
       // Render popup
     }
   };

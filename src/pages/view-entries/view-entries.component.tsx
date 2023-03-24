@@ -20,8 +20,12 @@ const ViewEntries: React.FC = () => {
     const starCountRef = ref(db, `/entries/${user?.userID}`);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      const entriesArray: [] | EntryEntity[] = Object.values(data);
-      setEntries(entriesArray);
+      if (data) {
+        const entriesArray: [] | EntryEntity[] = Object.values(data);
+        setEntries(entriesArray);
+      } else {
+        setEntries([]);
+      }
     });
     // eslint-disable-next-line
   }, []);

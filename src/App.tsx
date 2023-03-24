@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/protected-route/protected-route.compone
 import Popup from "./components/popup/popup.component";
 import { selectIsPopupActive } from "./redux/helpers/helpers.selector";
 import ViewEntries from "./pages/view-entries/view-entries.component";
+import { updateIsPopupActive } from "./redux/helpers/helpers.reducer";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -37,6 +38,15 @@ const App: React.FC = () => {
     });
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (isPopupActive) {
+      setTimeout(() => {
+        dispatch(updateIsPopupActive(false));
+      }, 3000);
+    }
+    // eslint-disable-next-line
+  }, [isPopupActive]);
 
   return (
     <div className="App">
