@@ -12,3 +12,8 @@ export const selectPopup = createSelector(
   [selectHelpers],
   (user) => user.popup
 );
+
+export const selectEntryBeingEdited = createSelector(
+  [selectHelpers],
+  (user) => user.entryBeingEdited
+);

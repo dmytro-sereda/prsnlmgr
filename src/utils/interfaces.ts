@@ -15,8 +15,18 @@ export interface Popup {
 
 export interface HelpersState {
   popup: Popup;
+  entryBeingEdited: string;
 }
 
 export interface UserState {
   userObject: UserObject;
+}
+
+export interface EntryEntity {
+  additionalInfo: string;
+  amountPaid: number;
+  category: string;
+  date: number;
+  id: string;
+  itemName: "One more";
 }

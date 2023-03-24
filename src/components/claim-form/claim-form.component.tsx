@@ -13,22 +13,27 @@ import {
   updateIsPopupActive,
   updatePopup,
 } from "../../redux/helpers/helpers.reducer";
-import { useAppDispatch } from "../../utils/hooks";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { ClaimErrors } from "../../utils/interfaces";
 import { schemaFactory } from "../../utils/schemaFactory";
 import { ClaimFormContainer } from "./claim-form.styles";
+import { db } from "../../firebase";
+import { ref, set } from "firebase/database";
+import { selectUserEntity } from "../../redux/user/user.selectors";
+import { nanoid } from "nanoid";
 
 const ClaimForm: React.FC = () => {
   const [claim, setClaim] = useState({
     itemName: "",
     amountPaid: 0,
-    date: "",
+    date: 0,
     category: "",
     additionalInfo: "",
   });
   const [claimErrors, setClaimErrors] = useState<ClaimErrors>({});
 
   // GLOBAL STATE
+  const user = useAppSelector(selectUserEntity);
   const dispatch = useAppDispatch();
 
   const handleInputAndSelect = (
@@ -37,6 +42,11 @@ const ClaimForm: React.FC = () => {
     >
   ) => {
     const { name, value } = e.currentTarget;
+    if (name === "date") {
+      const timeStamp = new Date(value).getTime();
+      setClaim({ ...claim, date: timeStamp });
+      return;
+    }
     setClaim({ ...claim, [name]: value });
   };
 
@@ -51,7 +61,26 @@ const ClaimForm: React.FC = () => {
       await claimSchema.validate(claim, { abortEarly: false });
       setClaimErrors({});
 
+      // Create id for the entry
+      const entryId = nanoid();
+
       // Write to db
+      set(ref(db, `/entries/${user?.userID}/${entryId}`), {
+        ...claim,
+        id: entryId,
+      });
+
+      // ENTRY FORMAT
+      // {
+      // uuid: {
+      // id: string
+      // itemName: string
+      // amountPaid: number
+      // dateStamp: number
+      // category: string
+      // additionalInfo: string
+      // }
+      // }
 
       // Display the popup
       dispatch(
@@ -69,7 +98,7 @@ const ClaimForm: React.FC = () => {
       setClaim({
         itemName: "",
         amountPaid: 0,
-        date: "",
+        date: 0,
         category: "",
         additionalInfo: "",
       });
