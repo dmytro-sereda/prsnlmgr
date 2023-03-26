@@ -1,34 +1,16 @@
-import { onValue, ref } from "firebase/database";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Entry from "../../components/entry/entry.component";
-import { db } from "../../firebase";
 import { Heading3, PageContainer } from "../../global";
-import { selectUserEntity } from "../../redux/user/user.selectors";
+import { selectEntries } from "../../redux/user/user.selectors";
 import { useAppSelector } from "../../utils/hooks";
-import { EntryEntity } from "../../utils/interfaces";
 import {
   EntriesContainer,
   EntriesSectionContainer,
   TableLabelsContainer,
 } from "./view-entries.styles";
 
-const ViewEntries: React.FC = () => {
-  const [entries, setEntries] = useState<[] | EntryEntity[]>([]);
-  const user = useAppSelector(selectUserEntity);
-
-  useEffect(() => {
-    const starCountRef = ref(db, `/entries/${user?.userID}`);
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const entriesArray: [] | EntryEntity[] = Object.values(data);
-        setEntries(entriesArray);
-      } else {
-        setEntries([]);
-      }
-    });
-    // eslint-disable-next-line
-  }, []);
+const ViewEntriesPage: React.FC = () => {
+  const entries = useAppSelector(selectEntries);
 
   return (
     <PageContainer>
@@ -55,4 +37,4 @@ const ViewEntries: React.FC = () => {
   );
 };
 
-export default ViewEntries;
+export default ViewEntriesPage;

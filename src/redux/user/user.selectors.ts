@@ -7,3 +7,8 @@ export const selectUserEntity = createSelector(
   [selectUser],
   (user) => user.userObject
 );
+
+export const selectEntries = createSelector(
+  [selectUser],
+  (user) => user.entries
+);

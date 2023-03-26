@@ -20,6 +20,7 @@ export interface HelpersState {
 
 export interface UserState {
   userObject: UserObject;
+  entries: [] | EntryEntity[];
 }
 
 export interface EntryEntity {

@@ -30,6 +30,9 @@ const Navigation: React.FC = () => {
         <NavigationListItem isActive={activeLink === "/entries"}>
           <Link to="/entries">View entries</Link>
         </NavigationListItem>
+        <NavigationListItem isActive={activeLink === "/analytics"}>
+          <Link to="/analytics">Analytics</Link>
+        </NavigationListItem>
       </NavigationList>
     </NavigationContainer>
   );

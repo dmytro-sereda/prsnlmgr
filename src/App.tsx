@@ -8,17 +8,20 @@ import GlobaStyle, {
 } from "./global";
 import LoginPage from "./pages/login/login.component";
 import SignupPage from "./pages/signup/signup.component";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import CreateEntryPage from "./pages/create-entry/create-entry.component";
 import Sidebar from "./components/sidebar/sidebar.component";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
 import { selectUserEntity } from "./redux/user/user.selectors";
-import { updateUserObject } from "./redux/user/user.reducer";
+import { updateEntries, updateUserObject } from "./redux/user/user.reducer";
 import ProtectedRoute from "./components/protected-route/protected-route.component";
 import Popup from "./components/popup/popup.component";
 import { selectIsPopupActive } from "./redux/helpers/helpers.selector";
-import ViewEntries from "./pages/view-entries/view-entries.component";
 import { updateIsPopupActive } from "./redux/helpers/helpers.reducer";
+import ViewEntriesPage from "./pages/view-entries/view-entries.component";
+import AnalyticsPage from "./pages/analytics/analytics.component";
+import { onValue, ref } from "firebase/database";
+import { EntryEntity } from "./utils/interfaces";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -39,6 +42,7 @@ const App: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
+  // Remove popup after 3s
   useEffect(() => {
     if (isPopupActive) {
       setTimeout(() => {
@@ -47,6 +51,23 @@ const App: React.FC = () => {
     }
     // eslint-disable-next-line
   }, [isPopupActive]);
+
+  // Load entries and update global state
+  useEffect(() => {
+    if (currentUser) {
+      const starCountRef = ref(db, `/entries/${currentUser?.userID}`);
+      onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const entriesArray: [] | EntryEntity[] = Object.values(data);
+          dispatch(updateEntries(entriesArray));
+        } else {
+          dispatch(updateEntries([]));
+        }
+      });
+    }
+    // eslint-disable-next-line
+  }, [currentUser]);
 
   return (
     <div className="App">
@@ -77,7 +98,19 @@ const App: React.FC = () => {
                   redirectTo="/login"
                   type="app"
                 >
-                  <ViewEntries></ViewEntries>
+                  <ViewEntriesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute
+                  user={currentUser}
+                  redirectTo="/login"
+                  type="app"
+                >
+                  <AnalyticsPage />
                 </ProtectedRoute>
               }
             />
