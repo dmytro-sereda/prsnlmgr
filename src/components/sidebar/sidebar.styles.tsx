@@ -9,10 +9,28 @@ export const SidebarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+  justify-content: space-between;
 `;
 
 export const LogoImage = styled.img`
   margin-left: 41px;
   margin-bottom: 41px;
   display: inline-block;
+  max-width: 250px;
+  width: 100%;
+`;
+
+export const AuthorName = styled.p`
+  padding-left: 41px;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+`;
+
+export const SidebarTopPart = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;

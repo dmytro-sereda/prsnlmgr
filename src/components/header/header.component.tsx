@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HeaderButton, HeaderContainer } from "./header.styles";
 import LogoDark from "../../assets/logo_dark.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { useAppSelector } from "../../utils/hooks";
@@ -10,7 +10,24 @@ import { Heading2 } from "../../global";
 
 const Header: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
+  const [heading, setHeading] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/createEntry":
+        setHeading("Create entry");
+        break;
+      case "/entries":
+        setHeading("Entries");
+        break;
+      case "/analytics":
+        setHeading("Analytics");
+        break;
+      default:
+    }
+  }, [location]);
 
   const handleLogOut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -26,7 +43,7 @@ const Header: React.FC = () => {
       {!currentUser ? (
         <img src={LogoDark} alt="PrsnlMgr Logo" />
       ) : (
-        <Heading2>Heading</Heading2>
+        <Heading2>{heading}</Heading2>
       )}
       {currentUser ? (
         <HeaderButton onClick={handleLogOut}>Log out</HeaderButton>
