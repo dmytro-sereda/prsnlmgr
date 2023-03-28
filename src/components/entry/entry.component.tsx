@@ -16,6 +16,7 @@ import { selectEntryBeingEdited } from "../../redux/helpers/helpers.selector";
 import { ref, update } from "firebase/database";
 import { db } from "../../firebase";
 import { selectUserEntity } from "../../redux/user/user.selectors";
+import { monthNames } from "../../utils/variables";
 
 interface Props {
   entry: EntryEntity;
@@ -31,20 +32,7 @@ const Entry: React.FC<Props> = ({ entry }) => {
   const dispatch = useAppDispatch();
 
   // Date config
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+
   const date = new Date(entry.date);
   const day = date.getDate();
   const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();

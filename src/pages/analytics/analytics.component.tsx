@@ -5,7 +5,9 @@ import { useAppSelector } from "../../utils/hooks";
 import { EntryEntity } from "../../utils/interfaces";
 import {
   ChartsContainer,
+  MonthSelect,
   MultiValueChart,
+  NoDataAvailableMessage,
   SingleValueCaptionText,
   SingleValueChartsContainer,
   SingleValueContainer,
@@ -18,6 +20,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import type { ChartData } from "chart.js";
 import {
+  monthNames,
   PieChartBorderColors,
   PieChartSectorColors,
 } from "../../utils/variables";
@@ -29,6 +32,8 @@ const AnalyticsPage: React.FC = () => {
   // LOCAL STATE
   const [lastMonthAmount, setLastMonthAmount] = useState(0);
   const [mostSpentCategory, setMostSpentCategory] = useState("");
+  const [categoryMonth, setCategoryMonth] = useState(new Date().getMonth());
+  const [pieChartMessage, setPieChartMessage] = useState("");
   const [pieChartData, setPieChartData] =
     useState<ChartData<"pie", number[], string>>();
 
@@ -36,15 +41,7 @@ const AnalyticsPage: React.FC = () => {
   const entries = useAppSelector(selectEntries);
 
   useEffect(() => {
-    const todayTimestamp = new Date().getTime();
-    const todayDay = new Date().getDate();
-    const firstDayOfTheMonth = new Date().getTime() - todayDay * 86400000;
-    const filteredData = entries.filter(
-      (entry) => entry.date > firstDayOfTheMonth && entry.date < todayTimestamp
-    );
-
-    // Pie chart with categories
-    prepareDataForPieChart(filteredData);
+    const filteredData = filterDataByMonth(new Date().getMonth());
 
     // Single Value Chart with Amount Spent
     prepareLastMonthSpent(filteredData);
@@ -54,6 +51,31 @@ const AnalyticsPage: React.FC = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const pieChartFilteredData = filterDataByMonth(categoryMonth);
+
+    // Pie chart with categories
+    if (Object.values(pieChartFilteredData).length) {
+      setPieChartMessage("");
+      prepareDataForPieChart(pieChartFilteredData);
+    } else {
+      // categoryMonth < 11
+      //   ? setCategoryMonth(categoryMonth + 1)
+      //   : setCategoryMonth(0);
+      setPieChartMessage("Sorry. There is no data for this time period");
+    }
+
+    // eslint-disable-next-line
+  }, [categoryMonth]);
+
+  const filterDataByMonth = (monthNumber: number) => {
+    return entries.filter(
+      (entry) =>
+        entry.date > new Date(`${monthNumber + 1}/01/2023`).getTime() &&
+        entry.date < new Date(`${monthNumber + 2}/01/2023`).getTime()
+    );
+  };
 
   const calculateTopFourCategories = (
     data: {
@@ -148,23 +170,47 @@ const AnalyticsPage: React.FC = () => {
       <ChartsContainer>
         {pieChartData && (
           <MultiValueChart>
-            <Pie
-              data={pieChartData}
-              options={{
-                plugins: {
-                  title: {
-                    display: true,
-                    text: "Expenses by category in {{monthName}}",
-                    font: {
-                      family: "'Inter', sans-serif",
-                      size: 18,
-                      style: "italic",
-                      weight: "300",
+            <MonthSelect
+              name="categoryMonth"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setCategoryMonth(+e.currentTarget.value);
+              }}
+              value={categoryMonth}
+            >
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">Augusut</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </MonthSelect>
+            {pieChartMessage ? (
+              <NoDataAvailableMessage>{pieChartMessage}</NoDataAvailableMessage>
+            ) : (
+              <Pie
+                data={pieChartData}
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: `Expenses by category in ${monthNames[categoryMonth]}`,
+                      font: {
+                        family: "'Inter', sans-serif",
+                        size: 18,
+                        style: "italic",
+                        weight: "300",
+                      },
                     },
                   },
-                },
-              }}
-            />
+                }}
+              />
+            )}
           </MultiValueChart>
         )}
 

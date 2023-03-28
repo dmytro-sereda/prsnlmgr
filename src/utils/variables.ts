@@ -13,3 +13,18 @@ export const PieChartBorderColors = [
   "rgba(14, 63, 107, 1)",
   "rgba(105, 14, 107, 1)",
 ];
+
+export const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

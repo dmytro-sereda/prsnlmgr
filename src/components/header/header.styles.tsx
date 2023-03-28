@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const HeaderFadeIn = keyframes`
+  0%{
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+  
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -7,6 +19,7 @@ export const HeaderContainer = styled.header`
   padding: 20px 41px;
   background-color: #f0e6ef;
   border-bottom: 1px solid #22183b;
+  animation: ${HeaderFadeIn} 1s;
 `;
 
 export const HeaderButton = styled.button`

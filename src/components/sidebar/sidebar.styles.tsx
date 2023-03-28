@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const SidebarFadeIn = keyframes`
+  0%{
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
+`;
 
 export const SidebarContainer = styled.div`
   min-height: 100vh;
@@ -10,6 +22,7 @@ export const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: space-between;
+  animation: ${SidebarFadeIn} 1s;
 `;
 
 export const LogoImage = styled.img`

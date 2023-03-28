@@ -50,6 +50,7 @@ export const MultiValueChart = styled.div`
   border-radius: 5px;
   font-weight: 300;
   animation: ${ChartAppearenceAnimation} 1s;
+  padding-bottom: 10px;
 `;
 
 export const SingleValueChartsContainer = styled.div`
@@ -63,4 +64,18 @@ export const ChartsContainer = styled.div`
   gap: 20px;
   flex-wrap: wrap;
   margin-top: 20px;
+`;
+
+export const MonthSelect = styled.select`
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 6px 6px 0 0;
+`;
+
+export const NoDataAvailableMessage = styled.p`
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 40px;
 `;
