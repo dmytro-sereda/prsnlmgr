@@ -16,8 +16,17 @@ import {
 } from "./analytics.styles";
 
 // CHART
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  Title,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
 import type { ChartData } from "chart.js";
 import {
   monthNames,
@@ -27,6 +36,14 @@ import {
 
 // Registering charts
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AnalyticsPage: React.FC = () => {
   // LOCAL STATE
@@ -36,12 +53,17 @@ const AnalyticsPage: React.FC = () => {
   const [pieChartMessage, setPieChartMessage] = useState("");
   const [pieChartData, setPieChartData] =
     useState<ChartData<"pie", number[], string>>();
+  const [barChartData, setBarChartData] =
+    useState<ChartData<"bar", number[], string>>();
 
   // GLOBAL STATE
   const entries = useAppSelector(selectEntries);
 
   useEffect(() => {
     const filteredData = filterDataByMonth(new Date().getMonth());
+
+    // Bar chart with amounts by months
+    prepareDataForBarChart();
 
     // Single Value Chart with Amount Spent
     prepareLastMonthSpent(filteredData);
@@ -60,9 +82,6 @@ const AnalyticsPage: React.FC = () => {
       setPieChartMessage("");
       prepareDataForPieChart(pieChartFilteredData);
     } else {
-      // categoryMonth < 11
-      //   ? setCategoryMonth(categoryMonth + 1)
-      //   : setCategoryMonth(0);
       setPieChartMessage("Sorry. There is no data for this time period");
     }
 
@@ -105,6 +124,26 @@ const AnalyticsPage: React.FC = () => {
     return topFour;
   };
 
+  const prepareDataForBarChart = () => {
+    const monthsCount = getMonthsCount();
+    const labels = Object.keys(monthsCount);
+    const chartData = Object.values(monthsCount);
+
+    const data = {
+      labels,
+      datasets: [
+        {
+          label: "2023",
+          data: chartData,
+          backgroundColor: "rgba(99, 87, 132, .9)",
+          barThickness: 30,
+        },
+      ],
+    };
+
+    setBarChartData(data);
+  };
+
   const prepareDataForPieChart = (filteredData: EntryEntity[]) => {
     const categoriesCount = getCategoriesCount(filteredData);
     // Get top 4 items
@@ -129,10 +168,19 @@ const AnalyticsPage: React.FC = () => {
     setPieChartData(data);
   };
 
-  const getCategoriesCount = (
-    filteredData: EntryEntity[]
-  ): { [key: string]: number } => {
-    const categoriesCount: any = {};
+  const getMonthsCount = () => {
+    const monthsCount: { [key: string]: number } = {};
+    entries.forEach((entry) => {
+      const month = new Date(entry.date).getMonth();
+      monthsCount[monthNames[month]]
+        ? (monthsCount[monthNames[month]] += entry.amountPaid)
+        : (monthsCount[monthNames[month]] = entry.amountPaid);
+    });
+    return monthsCount;
+  };
+
+  const getCategoriesCount = (filteredData: EntryEntity[]) => {
+    const categoriesCount: { [key: string]: number } = {};
     filteredData.forEach((entry) =>
       categoriesCount[entry.category]
         ? (categoriesCount[entry.category] += entry.amountPaid)
@@ -211,6 +259,30 @@ const AnalyticsPage: React.FC = () => {
                 }}
               />
             )}
+          </MultiValueChart>
+        )}
+
+        {barChartData && (
+          <MultiValueChart style={{ padding: "10px" }}>
+            <Bar
+              data={barChartData}
+              options={{
+                responsive: true,
+                aspectRatio: 1.5,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: `Months expenses`,
+                    font: {
+                      family: "'Inter', sans-serif",
+                      size: 18,
+                      style: "italic",
+                      weight: "300",
+                    },
+                  },
+                },
+              }}
+            />
           </MultiValueChart>
         )}
 

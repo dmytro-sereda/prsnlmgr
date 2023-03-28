@@ -44,13 +44,14 @@ export const SingleValueTextValue = styled.p`
 `;
 
 export const MultiValueChart = styled.div`
-  max-width: 455px;
+  max-width: 440px;
   width: 100%;
   background-color: #f0e6ef;
   border-radius: 5px;
   font-weight: 300;
   animation: ${ChartAppearenceAnimation} 1s;
   padding-bottom: 10px;
+  height: 100%;
 `;
 
 export const SingleValueChartsContainer = styled.div`
