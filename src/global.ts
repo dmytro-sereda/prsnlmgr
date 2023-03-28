@@ -137,3 +137,7 @@ export const ErrorMessage = styled.p`
   margin-top: 5px;
   font-size: 17px;
 `;
+
+export const AuthPageContainer = styled.div`
+  padding: 30px;
+`;

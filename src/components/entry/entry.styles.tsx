@@ -2,18 +2,17 @@ import styled from "styled-components";
 
 export const EntryContainer = styled.div`
   display: grid;
-  border: 1px solid #382e54;
-  grid-template-columns: 20% 18% 17% 19% 17.4% auto auto;
-  border-radius: 10px;
-  /* overflow: hidden; */
+  /* border: 1px solid #382e54; */
+  grid-template-columns:
+    minmax(200px, 20%) minmax(180px, 18%) minmax(170px, 17%)
+    minmax(190px, 19%) minmax(174px, 17.4%) minmax(50px, auto) minmax(50px, auto);
 
   span,
   input,
   select,
   textarea {
     padding: 15px 6px;
-    border-left: 1px solid #382e54;
-    border-right: 1px solid #382e54;
+    border: 1px solid #382e54;
     color: #382e54;
     font-size: 19px;
 
@@ -30,6 +29,10 @@ export const EditButton = styled.button`
 
   &:focus-visible {
     outline: solid 3px #333;
+  }
+
+  &:first-of-type {
+    border: 1px solid #382e54;
   }
 `;
 

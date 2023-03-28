@@ -2,11 +2,14 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import React from "react";
 import AuthForm from "../../components/auth-form/auth-form.component";
-import { Heading2 } from "../../global";
+import { AuthPageContainer, Heading2 } from "../../global";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../utils/hooks";
+import { updatePopup } from "../../redux/helpers/helpers.reducer";
 
 const SignupPage: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const handleFormSubmit = (
     e: React.FormEvent<HTMLFormElement>,
@@ -21,21 +24,35 @@ const SignupPage: React.FC = () => {
     )
       .then((userCredential) => {
         // Signed in
-        // const user = userCredential.user;
         navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorCode + " " + errorMessage);
+        if (errorCode === "auth/email-already-in-use") {
+          dispatch(
+            updatePopup({
+              isPopupActive: true,
+              isError: true,
+              message: "User with this email already exists",
+            })
+          );
+        } else {
+          dispatch(
+            updatePopup({
+              isPopupActive: true,
+              isError: true,
+              message: "Something went wrong, please try again",
+            })
+          );
+        }
       });
   };
 
   return (
-    <div>
+    <AuthPageContainer>
       <Heading2>Sign up</Heading2>
       <AuthForm type="signup" handleFormSubmit={handleFormSubmit} />
-    </div>
+    </AuthPageContainer>
   );
 };
 

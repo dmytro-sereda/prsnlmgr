@@ -7,6 +7,7 @@ const initialState: HelpersState = {
     isError: false,
     message: "",
   },
+  isMenuOpen: false,
   entryBeingEdited: "",
 };
 
@@ -23,10 +24,17 @@ const helpersSlice = createSlice({
     updateEntryBeingEdited(state, action: PayloadAction<string>) {
       state.entryBeingEdited = action.payload;
     },
+    updateIsMenuOpen(state, action: PayloadAction<boolean>) {
+      state.isMenuOpen = action.payload;
+    },
   },
 });
 
-export const { updateIsPopupActive, updatePopup, updateEntryBeingEdited } =
-  helpersSlice.actions;
+export const {
+  updateIsPopupActive,
+  updatePopup,
+  updateEntryBeingEdited,
+  updateIsMenuOpen,
+} = helpersSlice.actions;
 
 export default helpersSlice.reducer;

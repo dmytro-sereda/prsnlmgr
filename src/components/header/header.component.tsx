@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HeaderButton, HeaderContainer } from "./header.styles";
+import { HeaderButton, HeaderContainer, LeftSideHeader } from "./header.styles";
 import LogoDark from "../../assets/logo_dark.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 import { useAppSelector } from "../../utils/hooks";
 import { selectUserEntity } from "../../redux/user/user.selectors";
 import { Heading2 } from "../../global";
+import Hamburger from "../hamburger/hamburger.component";
 
 const Header: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -40,11 +41,14 @@ const Header: React.FC = () => {
 
   return (
     <HeaderContainer>
-      {!currentUser ? (
-        <img src={LogoDark} alt="PrsnlMgr Logo" />
-      ) : (
-        <Heading2>{heading}</Heading2>
-      )}
+      <LeftSideHeader>
+        <Hamburger />
+        {!currentUser ? (
+          <img src={LogoDark} alt="PrsnlMgr Logo" />
+        ) : (
+          <Heading2>{heading}</Heading2>
+        )}
+      </LeftSideHeader>
       {currentUser ? (
         <HeaderButton onClick={handleLogOut}>Log out</HeaderButton>
       ) : (

@@ -1,5 +1,9 @@
 import styled, { keyframes } from "styled-components";
 
+interface Props {
+  isOpen: boolean;
+}
+
 const SidebarFadeIn = keyframes`
   0%{
     transform: translateX(-40px);
@@ -14,8 +18,7 @@ const SidebarFadeIn = keyframes`
 
 export const SidebarContainer = styled.div`
   min-height: 100vh;
-  max-width: 420px;
-  width: 100%;
+  width: 420px;
   background-image: linear-gradient(115deg, #201639, #635784);
   padding: 20px 0;
   display: flex;
@@ -23,6 +26,19 @@ export const SidebarContainer = styled.div`
   align-items: start;
   justify-content: space-between;
   animation: ${SidebarFadeIn} 1s;
+  transition: all 0.4s;
+
+  @media only screen and (max-width: 1400px) {
+    position: fixed;
+    width: 100vw;
+    max-width: 100%;
+    transform: ${(props: Props) =>
+      props.isOpen ? "translateX(0%)" : "translateX(-100%)"};
+  }
+
+  @media only screen and (max-width: 500px) {
+    justify-content: center;
+  }
 `;
 
 export const LogoImage = styled.img`
@@ -31,6 +47,15 @@ export const LogoImage = styled.img`
   display: inline-block;
   max-width: 250px;
   width: 100%;
+
+  @media only screen and (max-width: 1400px) {
+    width: 70%;
+    margin: 5px auto 70px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    margin: 0 auto;
+  }
 `;
 
 export const AuthorName = styled.p`
@@ -39,6 +64,11 @@ export const AuthorName = styled.p`
   a {
     color: #fff;
     text-decoration: none;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    margin: 0 auto;
+    padding: 0;
   }
 `;
 

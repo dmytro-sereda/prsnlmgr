@@ -20,6 +20,16 @@ export const HeaderContainer = styled.header`
   background-color: #f0e6ef;
   border-bottom: 1px solid #22183b;
   animation: ${HeaderFadeIn} 1s;
+
+  @media only screen and (max-width: 600px) {
+    h2 {
+      display: none;
+    }
+
+    button {
+      font-size: 18px;
+    }
+  }
 `;
 
 export const HeaderButton = styled.button`
@@ -34,4 +44,9 @@ export const HeaderButton = styled.button`
   &:focus-visible {
     outline: solid #281e42 3px;
   }
+`;
+
+export const LeftSideHeader = styled.div`
+  display: flex;
+  align-items: center;
 `;

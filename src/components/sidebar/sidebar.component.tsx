@@ -8,9 +8,9 @@ import {
 import LogoLight from "../../assets/logo_light.png";
 import Navigation from "../navigation/navigation.component";
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   return (
-    <SidebarContainer>
+    <SidebarContainer isOpen={isOpen}>
       <SidebarTopPart>
         <LogoImage src={LogoLight} alt="Prsnlmsg Logo" />
 

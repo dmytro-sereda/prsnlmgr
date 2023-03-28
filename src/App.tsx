@@ -16,7 +16,10 @@ import { selectUserEntity } from "./redux/user/user.selectors";
 import { updateEntries, updateUserObject } from "./redux/user/user.reducer";
 import ProtectedRoute from "./components/protected-route/protected-route.component";
 import Popup from "./components/popup/popup.component";
-import { selectIsPopupActive } from "./redux/helpers/helpers.selector";
+import {
+  selectIsMenuOpen,
+  selectIsPopupActive,
+} from "./redux/helpers/helpers.selector";
 import { updateIsPopupActive } from "./redux/helpers/helpers.reducer";
 import ViewEntriesPage from "./pages/view-entries/view-entries.component";
 import AnalyticsPage from "./pages/analytics/analytics.component";
@@ -26,6 +29,8 @@ import { EntryEntity } from "./utils/interfaces";
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
   const isPopupActive = useAppSelector(selectIsPopupActive);
+  const isMenuOpen = useAppSelector(selectIsMenuOpen);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -74,7 +79,7 @@ const App: React.FC = () => {
       <GlobaStyle />
       {isPopupActive && <Popup />}
       <ApplicationContainer>
-        {currentUser && <Sidebar />}
+        {currentUser && <Sidebar isOpen={isMenuOpen} />}
         <ApplicationRightSideContainer>
           <Header />
           <Routes>

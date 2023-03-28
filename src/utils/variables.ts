@@ -1,3 +1,5 @@
+import { ChartOptions } from "chart.js";
+
 export const PieChartSectorColors = [
   "rgba(32, 22, 57, .9)",
   "rgba(99, 87, 132, .9)",
@@ -28,3 +30,20 @@ export const monthNames = [
   "November",
   "December",
 ];
+
+export const barChartOptions: ChartOptions = {
+  responsive: true,
+  aspectRatio: 1.5,
+  plugins: {
+    title: {
+      display: true,
+      text: `Months expenses`,
+      font: {
+        family: "'Inter', sans-serif",
+        size: 18,
+        style: "italic",
+        weight: "300",
+      },
+    },
+  },
+};

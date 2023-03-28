@@ -29,6 +29,7 @@ import {
 import { Pie, Bar } from "react-chartjs-2";
 import type { ChartData } from "chart.js";
 import {
+  barChartOptions,
   monthNames,
   PieChartBorderColors,
   PieChartSectorColors,
@@ -126,6 +127,7 @@ const AnalyticsPage: React.FC = () => {
 
   const prepareDataForBarChart = () => {
     const monthsCount = getMonthsCount();
+    if (Object.values(monthsCount).length === 0) return;
     const labels = Object.keys(monthsCount);
     const chartData = Object.values(monthsCount);
 
@@ -264,30 +266,12 @@ const AnalyticsPage: React.FC = () => {
 
         {barChartData && (
           <MultiValueChart style={{ padding: "10px" }}>
-            <Bar
-              data={barChartData}
-              options={{
-                responsive: true,
-                aspectRatio: 1.5,
-                plugins: {
-                  title: {
-                    display: true,
-                    text: `Months expenses`,
-                    font: {
-                      family: "'Inter', sans-serif",
-                      size: 18,
-                      style: "italic",
-                      weight: "300",
-                    },
-                  },
-                },
-              }}
-            />
+            <Bar data={barChartData} options={barChartOptions} />
           </MultiValueChart>
         )}
 
         <SingleValueChartsContainer>
-          {lastMonthAmount && (
+          {lastMonthAmount > 0 && (
             <SingleValueContainer>
               <SingleValueCaptionText>Last month</SingleValueCaptionText>
               <SingleValueNumberValue>

@@ -5,6 +5,10 @@ interface Props {
 
 export const NavigationContainer = styled.nav`
   width: 100%;
+
+  @media only screen and (max-width: 500px) {
+    margin: 40px 0;
+  }
 `;
 
 export const NavigationList = styled.ul`
@@ -33,6 +37,10 @@ export const NavigationListItem = styled.li`
 
     &:focus-visible {
       outline: solid #fff 1px;
+    }
+
+    @media only screen and (max-width: 1400px) {
+      text-align: center;
     }
   }
 `;

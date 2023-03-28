@@ -17,3 +17,8 @@ export const selectEntryBeingEdited = createSelector(
   [selectHelpers],
   (user) => user.entryBeingEdited
 );
+
+export const selectIsMenuOpen = createSelector(
+  [selectHelpers],
+  (user) => user.isMenuOpen
+);
