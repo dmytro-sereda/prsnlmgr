@@ -21,6 +21,10 @@ export const SingleValueContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: center;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 export const SingleValueCaptionText = styled.p`
@@ -51,13 +55,21 @@ export const MultiValueChart = styled.div`
   font-weight: 300;
   animation: ${ChartAppearenceAnimation} 1s;
   padding-bottom: 10px;
-  height: 100%;
+  height: auto;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 100%;
+  }
 `;
 
 export const SingleValueChartsContainer = styled.div`
   display: flex;
   gap: 20px;
   animation: ${ChartAppearenceAnimation} 1s;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const ChartsContainer = styled.div`
@@ -79,4 +91,15 @@ export const NoDataAvailableMessage = styled.p`
   font-size: 18px;
   font-weight: 700;
   margin-top: 40px;
+`;
+
+export const SingleAndMultiChartsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;

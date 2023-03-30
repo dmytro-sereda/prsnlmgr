@@ -47,3 +47,5 @@ export const barChartOptions: ChartOptions = {
     },
   },
 };
+
+export const EntriesPerPageLimit = 7;

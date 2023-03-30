@@ -8,6 +8,7 @@ import {
   MonthSelect,
   MultiValueChart,
   NoDataAvailableMessage,
+  SingleAndMultiChartsContainer,
   SingleValueCaptionText,
   SingleValueChartsContainer,
   SingleValueContainer,
@@ -264,31 +265,33 @@ const AnalyticsPage: React.FC = () => {
           </MultiValueChart>
         )}
 
-        {barChartData && (
-          <MultiValueChart style={{ padding: "10px" }}>
-            <Bar data={barChartData} options={barChartOptions} />
-          </MultiValueChart>
-        )}
-
-        <SingleValueChartsContainer>
-          {lastMonthAmount > 0 && (
-            <SingleValueContainer>
-              <SingleValueCaptionText>Last month</SingleValueCaptionText>
-              <SingleValueNumberValue>
-                ${(lastMonthAmount / 1000).toFixed(2)}k
-              </SingleValueNumberValue>
-              <SingleValueCaptionText>spent</SingleValueCaptionText>
-            </SingleValueContainer>
+        <SingleAndMultiChartsContainer>
+          {barChartData && (
+            <MultiValueChart style={{ padding: "10px" }}>
+              <Bar data={barChartData} options={barChartOptions} />
+            </MultiValueChart>
           )}
 
-          {mostSpentCategory && (
-            <SingleValueContainer>
-              <SingleValueCaptionText>Spent most on</SingleValueCaptionText>
-              <SingleValueTextValue>{mostSpentCategory}</SingleValueTextValue>
-              <SingleValueCaptionText>last month</SingleValueCaptionText>
-            </SingleValueContainer>
-          )}
-        </SingleValueChartsContainer>
+          <SingleValueChartsContainer>
+            {lastMonthAmount > 0 && (
+              <SingleValueContainer>
+                <SingleValueCaptionText>Last month</SingleValueCaptionText>
+                <SingleValueNumberValue>
+                  ${(lastMonthAmount / 1000).toFixed(2)}k
+                </SingleValueNumberValue>
+                <SingleValueCaptionText>spent</SingleValueCaptionText>
+              </SingleValueContainer>
+            )}
+
+            {mostSpentCategory && (
+              <SingleValueContainer>
+                <SingleValueCaptionText>Spent most on</SingleValueCaptionText>
+                <SingleValueTextValue>{mostSpentCategory}</SingleValueTextValue>
+                <SingleValueCaptionText>last month</SingleValueCaptionText>
+              </SingleValueContainer>
+            )}
+          </SingleValueChartsContainer>
+        </SingleAndMultiChartsContainer>
       </ChartsContainer>
     </PageContainer>
   );

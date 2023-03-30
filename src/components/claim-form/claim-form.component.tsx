@@ -50,7 +50,10 @@ const ClaimForm: React.FC = () => {
     const claimSchema = schemaFactory(errors);
 
     try {
-      await claimSchema.validate(claim, { abortEarly: false });
+      await claimSchema.validate(
+        { ...claim, amountPaid: +claim.amountPaid },
+        { abortEarly: false }
+      );
       setClaimErrors({});
 
       // Create id for the entry

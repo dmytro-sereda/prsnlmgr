@@ -1,8 +1,20 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 
 interface InputProps {
   isError?: string | undefined;
 }
+
+export const FadeInUp = keyframes`
+  0%{
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export default createGlobalStyle`
     *{
@@ -72,11 +84,16 @@ export const Heading3 = styled.h3`
   font-weight: 700;
   font-size: 30px;
   color: #281e42;
+  animation: ${FadeInUp} 1s;
 `;
 
 export const PageContainer = styled.div`
   text-align: left;
   padding: 44px 32px;
+
+  @media only screen and (max-width: 600px) {
+    padding: 20px;
+  }
 `;
 
 export const Select = styled.select`
@@ -130,6 +147,7 @@ export const RequiredText = styled.p`
   color: #635784;
   font-size: 20px;
   margin-top: 10px;
+  animation: ${FadeInUp} 1s;
 `;
 
 export const ErrorMessage = styled.p`

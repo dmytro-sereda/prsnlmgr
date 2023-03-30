@@ -15,9 +15,15 @@ export const EntryContainer = styled.div`
     border: 1px solid #382e54;
     color: #382e54;
     font-size: 19px;
+    max-height: 60px;
+    overflow: auto;
 
     &:nth-child(1) {
       border-radius: 9px 0 0 9px;
+    }
+
+    &.error {
+      border: 2px solid red;
     }
   }
 `;

@@ -11,12 +11,13 @@ import {
   updateEntryBeingEdited,
   updatePopup,
 } from "../../redux/helpers/helpers.reducer";
-import { EntryEntity } from "../../utils/interfaces";
+import { ClaimErrors, EntryEntity } from "../../utils/interfaces";
 import { selectEntryBeingEdited } from "../../redux/helpers/helpers.selector";
 import { ref, update } from "firebase/database";
 import { db } from "../../firebase";
 import { selectUserEntity } from "../../redux/user/user.selectors";
 import { monthNames } from "../../utils/variables";
+import { schemaFactory } from "../../utils/schemaFactory";
 
 interface Props {
   entry: EntryEntity;
@@ -25,6 +26,7 @@ interface Props {
 const Entry: React.FC<Props> = ({ entry }) => {
   // LOCAL STATE
   const [entryUpdated, setEntryUpdated] = useState(entry);
+  const [entryErrors, setEntryErrors] = useState<ClaimErrors>({});
 
   // GLOBAL STATE
   const entryBeingEdited = useAppSelector(selectEntryBeingEdited);
@@ -70,18 +72,39 @@ const Entry: React.FC<Props> = ({ entry }) => {
 
   const handleEditSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     // Validate data
+    const errors: ClaimErrors = {};
+    const entrySchema = schemaFactory(errors);
+    try {
+      await entrySchema.validate(
+        { ...entryUpdated, amountPaid: +entryUpdated.amountPaid },
+        { abortEarly: false }
+      );
 
-    // Update record
-    update(ref(db), {
-      [`entries/${user?.userID}/${entry.id}`]: {
-        ...entryUpdated,
-        amountPaid: +entryUpdated.amountPaid,
-        date: new Date(entryUpdated.date).getTime(),
-      },
-    });
+      // Remove errors
+      setEntryErrors({});
 
-    // Quit edit mode
-    dispatch(updateEntryBeingEdited(""));
+      // Update record
+      update(ref(db), {
+        [`entries/${user?.userID}/${entry.id}`]: {
+          ...entryUpdated,
+          amountPaid: +entryUpdated.amountPaid,
+          date: new Date(entryUpdated.date).getTime(),
+        },
+      });
+
+      // Quit edit mode
+      dispatch(updateEntryBeingEdited(""));
+    } catch (err) {
+      console.log(errors);
+      setEntryErrors(errors);
+      dispatch(
+        updatePopup({
+          isError: true,
+          isPopupActive: true,
+          message: "Please enter correct data",
+        })
+      );
+    }
   };
 
   return (
@@ -93,12 +116,14 @@ const Entry: React.FC<Props> = ({ entry }) => {
             value={entryUpdated.itemName}
             name="itemName"
             type="text"
+            className={entryErrors.itemName && "error"}
           />
           <input
             onChange={handleEditEntryChange}
             value={entryUpdated.amountPaid}
             name="amountPaid"
             type="number"
+            className={entryErrors.amountPaid && "error"}
           />
           <input
             onChange={handleEditEntryChange}
@@ -109,11 +134,13 @@ const Entry: React.FC<Props> = ({ entry }) => {
             }
             name="date"
             type="date"
+            className={entryErrors.date && "error"}
           />
           <select
             onChange={handleEditEntryChange}
             value={entryUpdated.category}
             name="category"
+            className={entryErrors.category && "error"}
           >
             <option value=""></option>
             <option value="food">Food</option>

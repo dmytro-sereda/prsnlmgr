@@ -34,6 +34,7 @@ export const SidebarContainer = styled.div`
     max-width: 100%;
     transform: ${(props: Props) =>
       props.isOpen ? "translateX(0%)" : "translateX(-100%)"};
+    animation: none;
   }
 
   @media only screen and (max-width: 500px) {

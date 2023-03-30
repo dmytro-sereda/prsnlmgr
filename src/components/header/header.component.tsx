@@ -42,11 +42,13 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <LeftSideHeader>
-        <Hamburger />
         {!currentUser ? (
           <img src={LogoDark} alt="PrsnlMgr Logo" />
         ) : (
-          <Heading2>{heading}</Heading2>
+          <>
+            <Hamburger />
+            <Heading2>{heading}</Heading2>
+          </>
         )}
       </LeftSideHeader>
       {currentUser ? (
