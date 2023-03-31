@@ -105,3 +105,8 @@ export const EntriesPerPageContainer = styled.div`
     border-bottom: 1px solid #382e54;
   }
 `;
+
+export const FiltersContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;

@@ -8,6 +8,7 @@ import {
   EntriesContainer,
   EntriesPerPageContainer,
   EntriesSectionContainer,
+  FiltersContainer,
   HeadingContainer,
   // LastAndFirstPageButton,
   PageButton,
@@ -19,6 +20,7 @@ const ViewEntriesPage: React.FC = () => {
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [limitEntriesPerPage, setLimitEntriesPerPage] = useState(5);
+  const [sortBy, setSortBy] = useState<"date" | "amountPaid">("date");
   const [buttonsList, setButtonsList] = useState<any[]>([]);
 
   // GLOBAL STATE
@@ -28,7 +30,11 @@ const ViewEntriesPage: React.FC = () => {
   // Divide into pages
 
   useEffect(() => {
-    setNumberOfPages(Math.ceil(entries.length / limitEntriesPerPage));
+    const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
+    setNumberOfPages(newNumberOfPages);
+
+    // If the record deleted was the last one on the page, then move to the new last page
+    if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
     // eslint-disable-next-line
   }, [entries]);
 
@@ -61,22 +67,42 @@ const ViewEntriesPage: React.FC = () => {
     <PageContainer>
       <HeadingContainer>
         <Heading3>Here are all your entries</Heading3>
-        <EntriesPerPageContainer>
-          <label htmlFor="entriesPerPage">Entries per page</label>
-          <select
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              setLimitEntriesPerPage(+e.currentTarget.value);
-            }}
-            name="entriesPerPage"
-            id="entriesPerPage"
-            value={limitEntriesPerPage}
-          >
-            <option value="5">5</option>
-            <option value="7">7</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-          </select>
-        </EntriesPerPageContainer>
+        <FiltersContainer>
+          <EntriesPerPageContainer>
+            <label htmlFor="entriesPerPage">Sort By</label>
+            <select
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                if (
+                  e.currentTarget.value === "date" ||
+                  e.currentTarget.value === "amountPaid"
+                )
+                  setSortBy(e.currentTarget.value);
+              }}
+              name="sortBy"
+              id="sortBy"
+              value={sortBy}
+            >
+              <option value="date">Date</option>
+              <option value="amountPaid">Amount</option>
+            </select>
+          </EntriesPerPageContainer>
+          <EntriesPerPageContainer>
+            <label htmlFor="entriesPerPage">Entries per page</label>
+            <select
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setLimitEntriesPerPage(+e.currentTarget.value);
+              }}
+              name="entriesPerPage"
+              id="entriesPerPage"
+              value={limitEntriesPerPage}
+            >
+              <option value="5">5</option>
+              <option value="7">7</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </EntriesPerPageContainer>
+        </FiltersContainer>
       </HeadingContainer>
 
       <EntriesSectionContainer>
@@ -91,7 +117,7 @@ const ViewEntriesPage: React.FC = () => {
         <EntriesContainer>
           {entries.length !== 0 ? (
             [...entries]
-              .sort((a, b) => a.date - b.date)
+              .sort((a, b) => a[sortBy] - b[sortBy])
               .slice(
                 (currentPage - 1) * limitEntriesPerPage,
                 (currentPage - 1) * limitEntriesPerPage + limitEntriesPerPage
