@@ -78,7 +78,8 @@ const ViewEntriesPage: React.FC = () => {
 
         <EntriesContainer>
           {entries.length !== 0 ? (
-            entries
+            [...entries]
+              .sort((a, b) => a.date - b.date)
               .slice(
                 (currentPage - 1) * limitEntriesPerPage,
                 (currentPage - 1) * limitEntriesPerPage + limitEntriesPerPage
