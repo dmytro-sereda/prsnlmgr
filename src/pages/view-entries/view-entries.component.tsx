@@ -31,6 +31,7 @@ const ViewEntriesPage: React.FC = () => {
           e.preventDefault();
           setCurrentPage(i);
         }}
+        key={i}
         isActive={currentPage === i}
       >
         {i}
