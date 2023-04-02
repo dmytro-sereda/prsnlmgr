@@ -62,6 +62,7 @@ export const PageButton = styled.button`
   padding: 10px;
   width: 40px;
   height: 40px;
+  border-radius: 4px;
 
   &:focus-visible {
     outline: solid #333 3px;
@@ -103,6 +104,10 @@ export const EntriesPerPageContainer = styled.div`
   select {
     border: none;
     border-bottom: 1px solid #382e54;
+
+    &:focus-visible {
+      outline: solid 3px #382e54;
+    }
   }
 `;
 

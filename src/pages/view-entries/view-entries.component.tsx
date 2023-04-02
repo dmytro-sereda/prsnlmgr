@@ -36,7 +36,7 @@ const ViewEntriesPage: React.FC = () => {
     // If the record deleted was the last one on the page, then move to the new last page
     if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
     // eslint-disable-next-line
-  }, [entries]);
+  }, [entries, limitEntriesPerPage]);
 
   useEffect(() => {
     const buttons = [];

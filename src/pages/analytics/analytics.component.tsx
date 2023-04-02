@@ -8,6 +8,7 @@ import {
   MonthSelect,
   MultiValueChart,
   NoDataAvailableMessage,
+  NoDataAvailableMessageContainer,
   SingleAndMultiChartsContainer,
   SingleValueCaptionText,
   SingleValueChartsContainer,
@@ -128,7 +129,10 @@ const AnalyticsPage: React.FC = () => {
 
   const prepareDataForBarChart = () => {
     const monthsCount = getMonthsCount();
-    if (Object.values(monthsCount).length === 0) return;
+    if (Object.values(monthsCount).length === 0) {
+      setPieChartMessage("Sorry. There is no data for this time period");
+      return;
+    }
     const labels = Object.keys(monthsCount);
     const chartData = Object.values(monthsCount);
 
@@ -219,51 +223,51 @@ const AnalyticsPage: React.FC = () => {
       <Heading3>Analytics based on your data</Heading3>
 
       <ChartsContainer>
-        {pieChartData && (
-          <MultiValueChart>
-            <MonthSelect
-              name="categoryMonth"
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                setCategoryMonth(+e.currentTarget.value);
-              }}
-              value={categoryMonth}
-            >
-              <option value="0">January</option>
-              <option value="1">February</option>
-              <option value="2">March</option>
-              <option value="3">April</option>
-              <option value="4">May</option>
-              <option value="5">June</option>
-              <option value="6">July</option>
-              <option value="7">Augusut</option>
-              <option value="8">September</option>
-              <option value="9">October</option>
-              <option value="10">November</option>
-              <option value="11">December</option>
-            </MonthSelect>
-            {pieChartMessage ? (
+        <MultiValueChart>
+          <MonthSelect
+            name="categoryMonth"
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setCategoryMonth(+e.currentTarget.value);
+            }}
+            value={categoryMonth}
+          >
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">Augusut</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+          </MonthSelect>
+          {!pieChartData ? (
+            <NoDataAvailableMessageContainer>
               <NoDataAvailableMessage>{pieChartMessage}</NoDataAvailableMessage>
-            ) : (
-              <Pie
-                data={pieChartData}
-                options={{
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: `Expenses by category in ${monthNames[categoryMonth]}`,
-                      font: {
-                        family: "'Inter', sans-serif",
-                        size: 18,
-                        style: "italic",
-                        weight: "300",
-                      },
+            </NoDataAvailableMessageContainer>
+          ) : (
+            <Pie
+              data={pieChartData!}
+              options={{
+                plugins: {
+                  title: {
+                    display: true,
+                    text: `Expenses by category in ${monthNames[categoryMonth]}`,
+                    font: {
+                      family: "'Inter', sans-serif",
+                      size: 18,
+                      style: "italic",
+                      weight: "300",
                     },
                   },
-                }}
-              />
-            )}
-          </MultiValueChart>
-        )}
+                },
+              }}
+            />
+          )}
+        </MultiValueChart>
 
         <SingleAndMultiChartsContainer>
           {barChartData && (
@@ -273,23 +277,29 @@ const AnalyticsPage: React.FC = () => {
           )}
 
           <SingleValueChartsContainer>
-            {lastMonthAmount > 0 && (
-              <SingleValueContainer>
-                <SingleValueCaptionText>Last month</SingleValueCaptionText>
-                <SingleValueNumberValue>
-                  ${(lastMonthAmount / 1000).toFixed(2)}k
-                </SingleValueNumberValue>
-                <SingleValueCaptionText>spent</SingleValueCaptionText>
-              </SingleValueContainer>
-            )}
+            <SingleValueContainer>
+              <SingleValueCaptionText>Last month</SingleValueCaptionText>
+              <SingleValueNumberValue>
+                ${(lastMonthAmount / 1000).toFixed(2)}k
+              </SingleValueNumberValue>
+              <SingleValueCaptionText>spent</SingleValueCaptionText>
+            </SingleValueContainer>
 
-            {mostSpentCategory && (
-              <SingleValueContainer>
-                <SingleValueCaptionText>Spent most on</SingleValueCaptionText>
-                <SingleValueTextValue>{mostSpentCategory}</SingleValueTextValue>
-                <SingleValueCaptionText>last month</SingleValueCaptionText>
-              </SingleValueContainer>
-            )}
+            <SingleValueContainer>
+              {mostSpentCategory ? (
+                <>
+                  <SingleValueCaptionText>Spent most on</SingleValueCaptionText>
+                  <SingleValueTextValue>
+                    {mostSpentCategory}
+                  </SingleValueTextValue>
+                  <SingleValueCaptionText>last month</SingleValueCaptionText>
+                </>
+              ) : (
+                <NoDataAvailableMessage>
+                  You haven't spent anything last month
+                </NoDataAvailableMessage>
+              )}
+            </SingleValueContainer>
           </SingleValueChartsContainer>
         </SingleAndMultiChartsContainer>
       </ChartsContainer>

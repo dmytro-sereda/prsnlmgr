@@ -65,6 +65,10 @@ export const AuthorName = styled.p`
   a {
     color: #fff;
     text-decoration: none;
+
+    &:focus-visible {
+      text-decoration: underline;
+    }
   }
 
   @media only screen and (max-width: 1400px) {

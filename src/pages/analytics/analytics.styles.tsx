@@ -86,11 +86,17 @@ export const MonthSelect = styled.select`
   border-radius: 6px 6px 0 0;
 `;
 
+export const NoDataAvailableMessageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 export const NoDataAvailableMessage = styled.p`
   text-align: center;
   font-size: 18px;
   font-weight: 700;
-  margin-top: 40px;
 `;
 
 export const SingleAndMultiChartsContainer = styled.div`
