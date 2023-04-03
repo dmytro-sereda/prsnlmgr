@@ -43,7 +43,7 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <LeftSideHeader>
         {!currentUser ? (
-          <img src={LogoDark} alt="PrsnlMgr Logo" />
+          <img src={LogoDark} alt="PrsnlMgr Logo" className="logo" />
         ) : (
           <>
             <Hamburger />

@@ -21,7 +21,14 @@ export const HeaderContainer = styled.header`
   border-bottom: 1px solid #22183b;
   animation: ${HeaderFadeIn} 1s;
 
+  .logo {
+    width: 80%;
+    display: inline-block;
+  }
+
   @media only screen and (max-width: 600px) {
+    padding: 20px;
+
     h2 {
       display: none;
     }
@@ -29,6 +36,10 @@ export const HeaderContainer = styled.header`
     button {
       font-size: 18px;
     }
+  }
+
+  @media only screen and (max-width: 370px) {
+    padding: 15px 10px;
   }
 `;
 
@@ -44,9 +55,15 @@ export const HeaderButton = styled.button`
   &:focus-visible {
     outline: solid #281e42 3px;
   }
+
+  @media only screen and (max-width: 500px) {
+    padding: 10px 20px;
+    min-width: 130px;
+  }
 `;
 
 export const LeftSideHeader = styled.div`
   display: flex;
   align-items: center;
+  margin-right: 20px;
 `;

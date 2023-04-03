@@ -37,8 +37,13 @@ const App: React.FC = () => {
     auth.onAuthStateChanged((user) => {
       // dispatch(updateUserObject(user));
       if (user) {
+        console.log(user);
         dispatch(
-          updateUserObject({ userID: user.uid, email: user.email || "" })
+          updateUserObject({
+            userID: user.uid,
+            email: user.email || "",
+            emailVerified: user.emailVerified,
+          })
         );
       } else {
         dispatch(updateUserObject(null));

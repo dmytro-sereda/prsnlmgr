@@ -10,7 +10,7 @@ import Navigation from "../navigation/navigation.component";
 
 const Sidebar: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   return (
-    <SidebarContainer isOpen={isOpen}>
+    <SidebarContainer data-cy="sidebar" isOpen={isOpen}>
       <SidebarTopPart>
         <LogoImage src={LogoLight} alt="Prsnlmsg Logo" />
 

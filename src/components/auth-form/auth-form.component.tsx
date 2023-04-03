@@ -33,6 +33,7 @@ const AuthForm: React.FC<Props> = ({ handleFormSubmit, type }) => {
           name="email"
           type="text"
           id="email"
+          autoComplete="username"
         />
       </InputContainer>
       <InputContainer>
@@ -43,6 +44,7 @@ const AuthForm: React.FC<Props> = ({ handleFormSubmit, type }) => {
           name="password"
           type="password"
           id="password"
+          autoComplete="current-password"
         />
       </InputContainer>
 
