@@ -6,7 +6,9 @@ import { PopupContainer } from "./popup.styles";
 const Popup: React.FC = () => {
   const popup = useAppSelector(selectPopup);
   return (
-    <PopupContainer isError={popup.isError}>{popup.message}</PopupContainer>
+    <PopupContainer data-cy="popup" isError={popup.isError}>
+      {popup.message}
+    </PopupContainer>
   );
 };
 

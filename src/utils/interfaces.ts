@@ -1,4 +1,8 @@
-export type UserObject = { userID: string; email: string } | null;
+export type UserObject = {
+  userID: string;
+  email: string;
+  emailVerified: boolean;
+} | null;
 
 export interface ClaimErrors {
   itemName?: string;
