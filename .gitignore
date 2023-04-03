@@ -8,6 +8,9 @@
 # testing
 /coverage
 /cypress/videos
+/cypress/screenshots
+serviceAccount.json
+cypress.env.json
 
 # production
 /build
