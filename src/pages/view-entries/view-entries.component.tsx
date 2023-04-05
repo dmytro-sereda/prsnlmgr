@@ -30,11 +30,14 @@ const ViewEntriesPage: React.FC = () => {
   // Divide into pages
 
   useEffect(() => {
-    const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
-    setNumberOfPages(newNumberOfPages);
+    if (entries.length) {
+      const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
+      setNumberOfPages(newNumberOfPages);
 
-    // If the record deleted was the last one on the page, then move to the new last page
-    if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
+      // If the record deleted was the last one on the page, then move to the new last page
+      if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
+    }
+
     // eslint-disable-next-line
   }, [entries, limitEntriesPerPage]);
 

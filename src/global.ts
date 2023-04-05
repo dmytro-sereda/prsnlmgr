@@ -158,6 +158,7 @@ export const ErrorMessage = styled.p`
 
 export const AuthPageContainer = styled.div`
   padding: 30px;
+  text-align: center;
 
   @media only screen and (max-width: 600px) {
     padding: 20px;

@@ -23,7 +23,7 @@ const ClaimForm: React.FC = () => {
   const [claim, setClaim] = useState({
     itemName: "",
     amountPaid: 0,
-    date: 0,
+    date: "",
     category: "",
     additionalInfo: "",
   });
@@ -62,7 +62,7 @@ const ClaimForm: React.FC = () => {
       // Write to db
       set(ref(db, `/entries/${user?.userID}/${entryId}`), {
         ...claim,
-        date: new Date(claim.date).getTime(),
+        date: new Date(claim.date).getTime() + 86400000,
         amountPaid: +claim.amountPaid,
         id: entryId,
       });
@@ -92,7 +92,7 @@ const ClaimForm: React.FC = () => {
       setClaim({
         itemName: "",
         amountPaid: 0,
-        date: 0,
+        date: "",
         category: "",
         additionalInfo: "",
       });
@@ -125,7 +125,9 @@ const ClaimForm: React.FC = () => {
           isError={claimErrors.itemName}
         />
         {claimErrors.itemName && (
-          <ErrorMessage>{claimErrors.itemName}</ErrorMessage>
+          <ErrorMessage data-cy="itemNameError">
+            {claimErrors.itemName}
+          </ErrorMessage>
         )}
       </InputContainer>
       <InputContainer>
@@ -142,7 +144,9 @@ const ClaimForm: React.FC = () => {
           isError={claimErrors.amountPaid}
         />
         {claimErrors.amountPaid && (
-          <ErrorMessage>{claimErrors.amountPaid}</ErrorMessage>
+          <ErrorMessage data-cy="amountPaidError">
+            {claimErrors.amountPaid}
+          </ErrorMessage>
         )}
       </InputContainer>
       <InputContainer>
@@ -157,7 +161,9 @@ const ClaimForm: React.FC = () => {
           onChange={handleInputAndSelect}
           isError={claimErrors.date}
         />
-        {claimErrors.date && <ErrorMessage>{claimErrors.date}</ErrorMessage>}
+        {claimErrors.date && (
+          <ErrorMessage data-cy="dateError">{claimErrors.date}</ErrorMessage>
+        )}
       </InputContainer>
       <InputContainer>
         <Label htmlFor="category">
@@ -185,7 +191,9 @@ const ClaimForm: React.FC = () => {
           </option>
         </Select>
         {claimErrors.category && (
-          <ErrorMessage>{claimErrors.category}</ErrorMessage>
+          <ErrorMessage data-cy="categoryError">
+            {claimErrors.category}
+          </ErrorMessage>
         )}
       </InputContainer>
       <InputContainer>

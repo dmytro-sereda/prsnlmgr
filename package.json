@@ -15,7 +15,7 @@
     "@types/react-dom": "^18.0.11",
     "chart.js": "^4.2.1",
     "cypress": "^12.9.0",
-    "cypress-firebase": "^3.0.1",
+    "cypress-firebase": "^2.2.5",
     "firebase": "^9.18.0",
     "firebase-admin": "^11.5.0",
     "nanoid": "^4.0.1",
