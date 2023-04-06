@@ -46,6 +46,7 @@ const ViewEntriesPage: React.FC = () => {
     for (let i = 1; i <= numberOfPages; i++) {
       buttons.push(
         <PageButton
+          data-cy="paginationButton"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
 
