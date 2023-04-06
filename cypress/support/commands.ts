@@ -4,14 +4,18 @@ import "firebase/compat/auth";
 import "firebase/compat/database";
 import { attachCustomCommands } from "cypress-firebase";
 
+const apiKey = Cypress.env("FIREBASE_API_KEY");
+const projectId = Cypress.env("PROJECT_ID");
+const appId = Cypress.env("FIREBASE_APP_ID");
+
 const fbConfig = {
-  apiKey: "AIzaSyD19r3fIf12BbpqEellsZmfQwZXnGNViEw",
-  authDomain: "prsnlmgr-713a4.firebaseapp.com",
-  databaseURL: "https://prsnlmgr-713a4-default-rtdb.firebaseio.com",
-  projectId: "prsnlmgr-713a4",
-  storageBucket: "prsnlmgr-713a4.appspot.com",
+  apiKey,
+  authDomain: `${projectId}.firebaseapp.com`,
+  databaseURL: `https:/${projectId}-default-rtdb.firebaseio.com`,
+  projectId,
+  storageBucket: `${projectId}.appspot.com`,
   messagingSenderId: "508479827792",
-  appId: "1:508479827792:web:eca968a4a7127406024655",
+  appId,
 };
 
 firebase.initializeApp(fbConfig);
