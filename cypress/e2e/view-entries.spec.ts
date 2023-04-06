@@ -101,7 +101,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 4")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 5")
       );
   });
   it("Pagination can be changed based on the value selected", () => {
@@ -116,7 +116,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]').should("have.length", "6");
     cy.get('[data-cy="paginationButton"]').should("have.length", "0");
   });
-  //   it("Entries can be filtered", () => {});
+
   it("Newly created item can be removed", () => {
     // Validate the pagination buttons
     cy.get('[data-cy="paginationButton"]').should("have.length", "2");
@@ -137,5 +137,26 @@ describe("View entries section works as expected", () => {
 
     // Buttons should disappear
     cy.get('[data-cy="paginationButton"]').should("have.length", "0");
+  });
+
+  it("Entries can be filtered", () => {
+    cy.get('[name="sortBy"]').select("Amount");
+
+    // reverse the order based on the amount instead of date
+    cy.get('[data-cy="entry"]')
+      .eq(0)
+      .within((entry) =>
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 5")
+      );
+
+    // Swithc back to date
+    cy.get('[name="sortBy"]').select("Date");
+
+    // Now sort by date again
+    cy.get('[data-cy="entry"]')
+      .eq(0)
+      .within((entry) =>
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 1")
+      );
   });
 });

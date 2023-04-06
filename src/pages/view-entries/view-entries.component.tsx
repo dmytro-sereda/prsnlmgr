@@ -73,7 +73,7 @@ const ViewEntriesPage: React.FC = () => {
         <Heading3>Here are all your entries</Heading3>
         <FiltersContainer>
           <EntriesPerPageContainer>
-            <label htmlFor="entriesPerPage">Sort By</label>
+            <label htmlFor="sortBy">Sort By</label>
             <select
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 if (
