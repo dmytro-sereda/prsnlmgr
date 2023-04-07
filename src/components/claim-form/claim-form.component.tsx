@@ -99,6 +99,7 @@ const ClaimForm: React.FC = () => {
     } catch (err) {
       // Render errors
       setClaimErrors(errors);
+      // Render popup
       dispatch(
         updatePopup({
           isError: true,
@@ -106,7 +107,6 @@ const ClaimForm: React.FC = () => {
           message: "💥 Please fix the errors above",
         })
       );
-      // Render popup
     }
   };
 

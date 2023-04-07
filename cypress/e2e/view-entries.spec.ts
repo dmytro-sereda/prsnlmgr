@@ -1,16 +1,25 @@
 describe("View entries section works as expected", () => {
-  beforeEach(() => {
+  before(() => {
     cy.login();
+    cy.visit("/createEntry");
+    // Create test records
+    cy.addRecords(5);
+  });
+
+  beforeEach(() => {
     cy.visit("/createEntry");
     cy.contains("a", "View entries").click();
   });
 
-  // after(() => {
-  //   cy.logout();
-  // });
+  after(() => {
+    // Remove test records
+    cy.removeRecords(5);
+
+    // Logout
+    cy.logout();
+  });
   it("Newly created item is displayed", () => {
     cy.get("h3").should("have.text", "Here are all your entries");
-    cy.contains("No entries").should("be.visible");
 
     cy.get('[data-cy="entry"]')
       .eq(0)
@@ -101,7 +110,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 5")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 5")
       );
   });
   it("Pagination can be changed based on the value selected", () => {
@@ -132,7 +141,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 1")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 1")
       );
 
     // Buttons should disappear
@@ -146,7 +155,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 5")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 5")
       );
 
     // Swithc back to date
@@ -156,7 +165,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Item 1")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 1")
       );
   });
 });

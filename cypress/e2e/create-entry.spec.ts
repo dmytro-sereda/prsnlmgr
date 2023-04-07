@@ -4,9 +4,9 @@ describe("Creating entry works as expected with validation", () => {
     cy.visit("/createEntry");
   });
 
-  // after(() => {
-  //   cy.logout();
-  // });
+  after(() => {
+    cy.logout();
+  });
 
   it("Validation on all fields", () => {
     cy.contains("h2", "Create entry");

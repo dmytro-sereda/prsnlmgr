@@ -21,3 +21,25 @@ const fbConfig = {
 firebase.initializeApp(fbConfig);
 
 attachCustomCommands({ Cypress, cy, firebase });
+
+Cypress.Commands.add("addRecords", (numberOfRecords: number) => {
+  cy.contains("a", "Create an entry").click();
+
+  for (let i = 1; i <= numberOfRecords; i++) {
+    cy.get('[name="itemName"]').type(`Test Record ${i}`);
+    cy.get('[name="amountPaid"]')
+      .clear()
+      .type(`${500 - (i - 1) * 100}`);
+    cy.get('[name="date"]').type(`2023-05-0${i}`);
+    cy.get('[name="category"]').select("Food");
+
+    // Click submit button
+    cy.contains("button", "Submit").click();
+  }
+});
+
+Cypress.Commands.add("removeRecords", (numberOfRecordsToRemove: number) => {
+  cy.get('[data-cy="deleteButton"]').each((button, index) => {
+    if (index < numberOfRecordsToRemove) cy.wrap(button).click();
+  });
+});
