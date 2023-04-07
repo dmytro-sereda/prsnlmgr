@@ -34,7 +34,6 @@ const Entry: React.FC<Props> = ({ entry }) => {
   const dispatch = useAppDispatch();
 
   // Date config
-
   const date = new Date(entry.date);
   const day = date.getDate();
   const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();
@@ -66,7 +65,6 @@ const Entry: React.FC<Props> = ({ entry }) => {
     >
   ) => {
     const { name, value } = e.currentTarget;
-    console.log(value);
     setEntryUpdated({ ...entryUpdated, [name]: value });
   };
 
@@ -88,14 +86,13 @@ const Entry: React.FC<Props> = ({ entry }) => {
         [`entries/${user?.userID}/${entry.id}`]: {
           ...entryUpdated,
           amountPaid: +entryUpdated.amountPaid,
-          date: new Date(entryUpdated.date).getTime(),
+          date: new Date(entryUpdated.date).getTime() + 86400000,
         },
       });
 
       // Quit edit mode
       dispatch(updateEntryBeingEdited(""));
     } catch (err) {
-      console.log(errors);
       setEntryErrors(errors);
       dispatch(
         updatePopup({
@@ -108,7 +105,7 @@ const Entry: React.FC<Props> = ({ entry }) => {
   };
 
   return (
-    <EntryContainer>
+    <EntryContainer data-cy="entry">
       {entryBeingEdited === entry.id ? (
         <>
           <input
@@ -172,15 +169,18 @@ const Entry: React.FC<Props> = ({ entry }) => {
         </>
       )}
       {entryBeingEdited === entry.id ? (
-        <DoneEditingButton onClick={handleEditSubmit}>Done</DoneEditingButton>
+        <DoneEditingButton data-cy="doneButton" onClick={handleEditSubmit}>
+          Done
+        </DoneEditingButton>
       ) : (
         <>
           <EditButton
+            data-cy="editButton"
             onClick={() => dispatch(updateEntryBeingEdited(entry.id))}
           >
             <Icon icon="ic:baseline-edit" width="19" color="#382E54" />
           </EditButton>
-          <DeleteButton onClick={handleDeleteButton}>
+          <DeleteButton data-cy="deleteButton" onClick={handleDeleteButton}>
             <Icon icon="ph:trash" width="19" color="#fff" />
           </DeleteButton>
         </>

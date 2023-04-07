@@ -1,14 +1,23 @@
 /// <reference types="cypress" />
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import { attachCustomCommands } from "cypress-firebase";
 
-Cypress.Commands.add("authenticate", () => {
-  cy.visit("/login");
+const apiKey = Cypress.env("FIREBASE_API_KEY");
+const projectId = Cypress.env("PROJECT_ID");
+const appId = Cypress.env("FIREBASE_APP_ID");
 
-  // Fill fields
-  cy.get('[id="email"]').type("test@gmail.com");
-  cy.get('[id="email"]').should("have.value", "test@gmail.com");
-  cy.get('[id="password"]').type("testtest");
-  cy.get('[id="password"]').should("have.value", "testtest");
+const fbConfig = {
+  apiKey,
+  authDomain: `${projectId}.firebaseapp.com`,
+  databaseURL: `https:/${projectId}-default-rtdb.firebaseio.com`,
+  projectId,
+  storageBucket: `${projectId}.appspot.com`,
+  messagingSenderId: "508479827792",
+  appId,
+};
 
-  // Click button
-  cy.contains("button", "Log in").click();
-});
+firebase.initializeApp(fbConfig);
+
+attachCustomCommands({ Cypress, cy, firebase });

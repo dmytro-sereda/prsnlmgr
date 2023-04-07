@@ -85,6 +85,7 @@ const AnalyticsPage: React.FC = () => {
       setPieChartMessage("");
       prepareDataForPieChart(pieChartFilteredData);
     } else {
+      setPieChartData(undefined);
       setPieChartMessage("Sorry. There is no data for this time period");
     }
 

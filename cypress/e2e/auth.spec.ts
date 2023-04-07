@@ -1,17 +1,21 @@
 describe("Authentication works as expected", () => {
   beforeEach(() => {
+    cy.logout();
     cy.visit("/login");
   });
+
+  after(() => {
+    cy.logout();
+    cy.contains("h2", "Log in").should("be.visible");
+  });
   it("Login page displays error with incorrect credentials", () => {
-    // Fill fields
+    // // Fill fields
     cy.get('[id="email"]').type("test123@gmail.com");
     cy.get('[id="email"]').should("have.value", "test123@gmail.com");
     cy.get('[id="password"]').type("password");
     cy.get('[id="password"]').should("have.value", "password");
-
     // Click button
     cy.contains("button", "Log in").click();
-
     // Display popup
     cy.get('[data-cy="popup"]')
       .should("be.visible")
@@ -39,8 +43,24 @@ describe("Authentication works as expected", () => {
   });
 
   it("Successful sign in", () => {
-    cy.authenticate();
+    cy.visit("/login");
 
+    // Fill fields
+    cy.get('[id="email"]').type(Cypress.env("TEST_ACCOUNT_EMAIL"));
+    cy.get('[id="email"]').should(
+      "have.value",
+      Cypress.env("TEST_ACCOUNT_EMAIL")
+    );
+    cy.get('[id="password"]').type(Cypress.env("TEST_ACCOUNT_PASSWORD"));
+    cy.get('[id="password"]').should(
+      "have.value",
+      Cypress.env("TEST_ACCOUNT_PASSWORD")
+    );
+
+    // Click button
+    cy.contains("button", "Log in").click();
+
+    // Assert the successfull login
     cy.get('[data-cy="sidebar"]').should("be.visible");
   });
 });

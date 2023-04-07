@@ -15,7 +15,9 @@
     "@types/react-dom": "^18.0.11",
     "chart.js": "^4.2.1",
     "cypress": "^12.9.0",
+    "cypress-firebase": "^2.2.5",
     "firebase": "^9.18.0",
+    "firebase-admin": "^11.5.0",
     "nanoid": "^4.0.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -34,7 +36,7 @@
     "start": "react-scripts  -r @cypress/instrument-cra start",
     "cypress:check-coverage": "npx nyc report --check-coverage --lines 90",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npc cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -30,11 +30,14 @@ const ViewEntriesPage: React.FC = () => {
   // Divide into pages
 
   useEffect(() => {
-    const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
-    setNumberOfPages(newNumberOfPages);
+    if (entries.length) {
+      const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
+      setNumberOfPages(newNumberOfPages);
 
-    // If the record deleted was the last one on the page, then move to the new last page
-    if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
+      // If the record deleted was the last one on the page, then move to the new last page
+      if (currentPage > newNumberOfPages) setCurrentPage(newNumberOfPages);
+    }
+
     // eslint-disable-next-line
   }, [entries, limitEntriesPerPage]);
 
@@ -43,6 +46,7 @@ const ViewEntriesPage: React.FC = () => {
     for (let i = 1; i <= numberOfPages; i++) {
       buttons.push(
         <PageButton
+          data-cy="paginationButton"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
 
@@ -69,7 +73,7 @@ const ViewEntriesPage: React.FC = () => {
         <Heading3>Here are all your entries</Heading3>
         <FiltersContainer>
           <EntriesPerPageContainer>
-            <label htmlFor="entriesPerPage">Sort By</label>
+            <label htmlFor="sortBy">Sort By</label>
             <select
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 if (
