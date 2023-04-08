@@ -16,6 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Print environment variable
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        run: echo $FIREBASE_API_KEY $PROJECT_ID $FIREBASE_APP_ID
+
       - name: Cypress run
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
