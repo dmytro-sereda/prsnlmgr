@@ -5,11 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-      PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
 jobs:
   tests:
