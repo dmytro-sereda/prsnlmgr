@@ -5,9 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
-
-# env:
-# WEBAPP: app-hsfdonation-dev-001
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
 jobs:
   tests:
@@ -30,11 +32,7 @@ jobs:
           wait-on: "http://localhost:3000" # Waits for above
           record: false
           parallel: false # Runs test in parallel using settings above
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
 
       # # TESTING COVERAGE INFO
       # - name: Code Coverage Check
