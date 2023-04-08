@@ -24,18 +24,17 @@ jobs:
       #   run: echo $FIREBASE_API_KEY $PROJECT_ID $FIREBASE_APP_ID
 
       - name: Cypress run
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         uses: cypress-io/github-action@v5
         with:
           start: npm start
           wait-on: "http://localhost:3000" # Waits for above
           record: false
           parallel: false # Runs test in parallel using settings above
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
 
       # # TESTING COVERAGE INFO
       # - name: Code Coverage Check
