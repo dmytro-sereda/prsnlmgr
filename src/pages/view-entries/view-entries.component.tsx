@@ -20,7 +20,9 @@ const ViewEntriesPage: React.FC = () => {
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [limitEntriesPerPage, setLimitEntriesPerPage] = useState(5);
-  const [sortBy, setSortBy] = useState<"date" | "amountPaid">("date");
+  const [sortBy, setSortBy] = useState<
+    "dateAsc" | "dateDesc" | "amountPaidAsc" | "amountPaidDesc"
+  >("dateAsc");
   const [buttonsList, setButtonsList] = useState<any[]>([]);
 
   // GLOBAL STATE
@@ -77,8 +79,10 @@ const ViewEntriesPage: React.FC = () => {
             <select
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                 if (
-                  e.currentTarget.value === "date" ||
-                  e.currentTarget.value === "amountPaid"
+                  e.currentTarget.value === "dateAsc" ||
+                  e.currentTarget.value === "dateDesc" ||
+                  e.currentTarget.value === "amountPaidAsc" ||
+                  e.currentTarget.value === "amountPaidDesc"
                 )
                   setSortBy(e.currentTarget.value);
               }}
@@ -86,8 +90,10 @@ const ViewEntriesPage: React.FC = () => {
               id="sortBy"
               value={sortBy}
             >
-              <option value="date">Date</option>
-              <option value="amountPaid">Amount</option>
+              <option value="dateAsc">Date (Asc)</option>
+              <option value="dateDesc">Date (Desc)</option>
+              <option value="amountPaidAsc">Amount (Asc)</option>
+              <option value="amountPaidDesc">Amount (Desc)</option>
             </select>
           </EntriesPerPageContainer>
           <EntriesPerPageContainer>
@@ -121,7 +127,15 @@ const ViewEntriesPage: React.FC = () => {
         <EntriesContainer>
           {entries.length !== 0 ? (
             [...entries]
-              .sort((a, b) => a[sortBy] - b[sortBy])
+              .sort((a, b) => {
+                if (sortBy === "dateAsc") return a.date - b.date;
+                if (sortBy === "dateDesc") return b.date - a.date;
+                if (sortBy === "amountPaidDesc")
+                  return b.amountPaid - a.amountPaid;
+                if (sortBy === "amountPaidAsc")
+                  return a.amountPaid - b.amountPaid;
+                return 1;
+              })
               .slice(
                 (currentPage - 1) * limitEntriesPerPage,
                 (currentPage - 1) * limitEntriesPerPage + limitEntriesPerPage

@@ -149,7 +149,7 @@ describe("View entries section works as expected", () => {
   });
 
   it("Entries can be filtered", () => {
-    cy.get('[name="sortBy"]').select("Amount");
+    cy.get('[name="sortBy"]').select("Amount (Asc)");
 
     // reverse the order based on the amount instead of date
     cy.get('[data-cy="entry"]')
@@ -159,7 +159,7 @@ describe("View entries section works as expected", () => {
       );
 
     // Swithc back to date
-    cy.get('[name="sortBy"]').select("Date");
+    cy.get('[name="sortBy"]').select("Date (Asc)");
 
     // Now sort by date again
     cy.get('[data-cy="entry"]')
