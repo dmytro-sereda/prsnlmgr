@@ -6,12 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-  PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -27,6 +21,11 @@ jobs:
       #   run: echo $FIREBASE_API_KEY $PROJECT_ID $FIREBASE_APP_ID
 
       - name: Cypress run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         uses: cypress-io/github-action@v5
         with:
           start: npm start
