@@ -15,6 +15,7 @@ jobs:
 
       # - name: Print environment variable
       #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
       #     PROJECT_ID: ${{ secrets.PROJECT_ID }}
       #     FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
@@ -29,9 +30,9 @@ jobs:
           parallel: false # Runs test in parallel using settings above
         env:
           CYPRESS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-          CYPRESS_PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          CYPRESS_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          CYPRESS_FIREBASE_API_KEY: AIzaSyD19r3fIf12BbpqEellsZmfQwZXnGNViEw
+          CYPRESS_PROJECT_ID: prsnlmgr-713a4
+          CYPRESS_FIREBASE_APP_ID: 1:508479827792:web:eca968a4a7127406024655
 
       # # TESTING COVERAGE INFO
       # - name: Code Coverage Check
