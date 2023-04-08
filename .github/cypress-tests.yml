@@ -1,0 +1,38 @@
+name: Run cypress tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  WEBAPP: app-hsfdonation-dev-001
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: npm install and build
+        run: |
+          npm install
+          npm run build --if-present
+
+      - name: Cypress run
+        # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000" # Waits for above
+          record: false
+          parallel: false # Runs test in parallel using settings above
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # # TESTING COVERAGE INFO
+      # - name: Code Coverage Check
+      #   run: npm run cypress:check-coverage
