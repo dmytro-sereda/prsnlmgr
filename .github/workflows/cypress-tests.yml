@@ -6,8 +6,8 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  WEBAPP: app-hsfdonation-dev-001
+# env:
+# WEBAPP: app-hsfdonation-dev-001
 
 jobs:
   tests:
@@ -16,13 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: npm install and build
-        run: |
-          npm install
-          npm run build --if-present
-
       - name: Cypress run
-        # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         uses: cypress-io/github-action@v5
         with:
           start: npm start
@@ -30,8 +29,6 @@ jobs:
           record: false
           parallel: false # Runs test in parallel using settings above
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # # TESTING COVERAGE INFO
       # - name: Code Coverage Check
