@@ -31,8 +31,8 @@ jobs:
         uses: cypress-io/github-action@v5
         env:
           CYPRESS_TEST_VARIABLE: 200
-          CYPRESS_ANOTHER_TEST_VARIABLE: hello
-          CYPRESS_PROJECT_ID: prsnlmgr
+          CYPRESS_ANOTHER_TEST_VARIABLE: prsnlmgr
+          # CYPRESS_PROJECT_ID: prsnlmgr
         with:
           start: npm start
           wait-on: "http://localhost:3000" # Waits for above
