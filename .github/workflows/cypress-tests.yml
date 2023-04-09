@@ -31,7 +31,7 @@ jobs:
         uses: cypress-io/github-action@v5
         env:
           CYPRESS_TEST_VARIABLE: 200
-          CYPRESS_ANOTHER_TEST_VARIABLE: prsnlmgr
+          CYPRESS_ANOTHER_TEST_VARIABLE: prsnlmgr-713a4
           # CYPRESS_PROJECT_ID: prsnlmgr
         with:
           start: npm start
