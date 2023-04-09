@@ -24,9 +24,10 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         env:
-          CYPRESS_TEST_VARIABLE: 200
           CYPRESS_ANOTHER_TEST_VARIABLE: ${{ secrets.PROJECT_ID }}
-          CYPRESS_PROJECT_ID: prsnlmgr
+          CYPRESS_PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          CYPRESS_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          CYPRESS_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         with:
           start: npm start
           wait-on: "http://localhost:3000" # Waits for above
