@@ -7,6 +7,8 @@ on:
   workflow_dispatch:
 
 env:
+  TEST_VARIABLE: 200
+  ANOTHER_TEST_VARIABLE: hello
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
   PROJECT_ID: prsnlmgr-713a4
@@ -30,7 +32,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         env:
-          CYPRESS_TEST_VARIABLE: 20
+          # CYPRESS_TEST_VARIABLE: 20
           PROJECT_ID: prsnlmgr-713a4
         with:
           start: npm start
