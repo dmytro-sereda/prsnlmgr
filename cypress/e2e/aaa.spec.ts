@@ -5,6 +5,6 @@ describe("Test", () => {
     const anotherTest = Cypress.env("ANOTHER_TEST_VARIABLE");
     expect(test).to.equal(200);
     expect(anotherTest).to.equal("hello");
-    expect(projectId).to.equal("prsnlmgr-713a4");
+    expect(projectId).to.equal("prsnlmgr");
   });
 });
