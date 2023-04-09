@@ -3,8 +3,8 @@ describe("Test", () => {
     const projectId = Cypress.env("PROJECT_ID");
     const test = Cypress.env("TEST_VARIABLE");
     const anotherTest = Cypress.env("ANOTHER_TEST_VARIABLE");
-    // expect(projectId).to.equal("prsnlmgr-713a4");
     expect(test).to.equal(200);
     expect(anotherTest).to.equal("hello");
+    expect(projectId).to.equal("prsnlmgr-713a4");
   });
 });
