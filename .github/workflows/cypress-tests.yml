@@ -6,6 +6,12 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+  PROJECT_ID: prsnlmgr-713a4
+  FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -23,17 +29,13 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
+        env:
+          CYPRESS_TEST_VARIABLE: 20
         with:
           start: npm start
           wait-on: "http://localhost:3000" # Waits for above
           record: false
           parallel: false # Runs test in parallel using settings above
-        env:
-          CYPRESS_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_FIREBASE_API_KEY: AIzaSyD19r3fIf12BbpqEellsZmfQwZXnGNViEw
-          CYPRESS_PROJECT_ID: prsnlmgr-713a4
-          CYPRESS_FIREBASE_APP_ID: 1:508479827792:web:eca968a4a7127406024655
-
       # # TESTING COVERAGE INFO
       # - name: Code Coverage Check
       #   run: npm run cypress:check-coverage
