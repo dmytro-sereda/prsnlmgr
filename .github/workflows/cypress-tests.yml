@@ -13,13 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Print environment variable
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
-      #     PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      #     FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-      #   run: echo $FIREBASE_API_KEY $PROJECT_ID $FIREBASE_APP_ID
+      - name: Set up Firebase credentials
+        uses: firebase/github-actions/setup-firebase@v1
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
@@ -27,8 +25,8 @@ jobs:
           CYPRESS_FIREBASE_PROJECT_ID: ${{ secrets.PROJECT_ID }}
           CYPRESS_FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           CYPRESS_FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          CYPRESS_TEST_ACCOUNT_EMAIL: cypress-test@gmail.com
-          CYPRESS_TEST_ACCOUNT_PASSWORD: cypresstest
+          CYPRESS_TEST_ACCOUNT_EMAIL: ${{ secrets.CYPRESS_TEST_EMAIL }}
+          CYPRESS_TEST_ACCOUNT_PASSWORD: ${{ secrets.CYPRESS_TEST_PASSWORD }}
         with:
           start: npm start
           wait-on: "http://localhost:3000" # Waits for above
