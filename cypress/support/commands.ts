@@ -8,7 +8,7 @@ const apiKey = Cypress.env("FIREBASE_API_KEY");
 const projectId = Cypress.env("FIREBASE_PROJECT_ID");
 const appId = Cypress.env("FIREBASE_APP_ID");
 
-cy.log(projectId);
+console.log(projectId);
 
 const fbConfig = {
   apiKey,
