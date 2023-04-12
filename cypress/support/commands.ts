@@ -5,10 +5,9 @@ import "firebase/compat/database";
 import { attachCustomCommands } from "cypress-firebase";
 
 const apiKey = Cypress.env("FIREBASE_API_KEY");
-const projectId = Cypress.env("FIREBASE_PROJECT_ID");
+const projectId = "prsnlmgr-713a4";
+// const projectId = Cypress.env("FIREBASE_PROJECT_ID");
 const appId = Cypress.env("FIREBASE_APP_ID");
-
-console.log(projectId);
 
 const fbConfig = {
   apiKey,
