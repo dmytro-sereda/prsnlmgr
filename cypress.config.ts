@@ -5,6 +5,7 @@ import { plugin as cypressFirebasePlugin } from "cypress-firebase";
 export default defineConfig({
   viewportHeight: 1080,
   viewportWidth: 1920,
+  projectId: "1jicua",
   e2e: {
     baseUrl: "http://localhost:3000",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
