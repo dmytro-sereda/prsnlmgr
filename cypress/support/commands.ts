@@ -10,14 +10,10 @@ const appId = Cypress.env("FIREBASE_APP_ID");
 
 const fbConfig = {
   apiKey,
-  authDomain: `prsnlmgr-713a4.firebaseapp.com`,
-  // authDomain: `${projectId}.firebaseapp.com`,
-  databaseURL: `https://prsnlmgr-713a4-default-rtdb.firebaseio.com`,
-  // databaseURL: `https://${projectId}-default-rtdb.firebaseio.com`,
-  projectId: "prsnlmgr-713a4",
-  // projectId,
-  storageBucket: `prsnlmgr-713a4.appspot.com`,
-  // storageBucket: `${projectId}.appspot.com`,
+  authDomain: `${projectId}.firebaseapp.com`,
+  databaseURL: `https://${projectId}-default-rtdb.firebaseio.com`,
+  projectId,
+  storageBucket: `${projectId}.appspot.com`,
   messagingSenderId: "508479827792",
   appId,
 };
