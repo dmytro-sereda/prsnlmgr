@@ -67,3 +67,19 @@ export const LeftSideHeader = styled.div`
   align-items: center;
   margin-right: 20px;
 `;
+
+export const ProfileButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid #281e42;
+  }
+`;
+
+export const ProfileContainer = styled.div`
+  position: relative;
+`;

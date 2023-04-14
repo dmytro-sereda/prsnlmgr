@@ -21,6 +21,7 @@ export interface HelpersState {
   popup: Popup;
   entryBeingEdited: string;
   isMenuOpen: boolean;
+  isDropdownOpen: boolean;
 }
 
 export interface UserState {
