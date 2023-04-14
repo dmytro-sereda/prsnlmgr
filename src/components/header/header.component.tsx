@@ -16,6 +16,7 @@ import { Icon } from "@iconify/react";
 import DropdownMenu from "../dropdown-menu/dropdown-menu.component";
 import { selectIsDropdownOpen } from "src/redux/helpers/helpers.selector";
 import { updateIsDropdownOpen } from "src/redux/helpers/helpers.reducer";
+import { colors } from "src/utils/variables";
 
 const Header: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -59,8 +60,16 @@ const Header: React.FC = () => {
                 dispatch(updateIsDropdownOpen(!isDropdownOpen));
               }}
             >
-              <Icon icon="mdi:user-circle" width="40" color="#382E54" />
-              <Icon icon="ph:caret-down-fill" height="12" color="#382E54" />
+              <Icon
+                icon="mdi:user-circle"
+                width="40"
+                color={colors.primaryColor}
+              />
+              <Icon
+                icon="ph:caret-down-fill"
+                height="12"
+                color={colors.primaryColor}
+              />
             </ProfileButton>
             {isDropdownOpen && <DropdownMenu />}
           </ProfileContainer>

@@ -49,3 +49,12 @@ export const barChartOptions: ChartOptions = {
 };
 
 export const EntriesPerPageLimit = 7;
+
+export const colors = {
+  primaryColor: "#201639",
+  secondaryColor: "#635784",
+  tertiaryColor: "#F0E6EF",
+  buttonColor: "#F0A6CA",
+  dangerColor: "#AF0000",
+  errorColor: "#E80000",
+};

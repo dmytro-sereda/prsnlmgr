@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle, keyframes } from "styled-components";
+import { colors } from "./utils/variables";
 
 interface InputProps {
   isError?: string | undefined;
@@ -56,34 +57,35 @@ export const InputContainer = styled.div`
 
 export const Input = styled.input`
   width: 100%;
-  border: 1px solid #281e42;
+  border: 1px solid ${colors.primaryColor};
   border-radius: 10px;
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
-  ${(props: InputProps) => props.isError && "border: 1px solid #e80000;"}
+  ${(props: InputProps) =>
+    props.isError && `border: 1px solid ${colors.errorColor};`}
 
   &:focus-visible {
-    outline: solid #281e42 1px;
+    outline: solid ${colors.primaryColor} 1px;
   }
 `;
 
 export const Label = styled.label`
   font-size: 20px;
-  color: #281e42;
+  color: ${colors.primaryColor};
   font-weight: 400;
 `;
 
 export const Heading2 = styled.h2`
   font-weight: 700;
   font-size: 40px;
-  color: #281e42;
+  color: ${colors.primaryColor};
 `;
 
 export const Heading3 = styled.h3`
   font-weight: 700;
   font-size: 30px;
-  color: #281e42;
+  color: ${colors.primaryColor};
   animation: ${FadeInUp} 1s;
 `;
 
@@ -98,60 +100,61 @@ export const PageContainer = styled.div`
 
 export const Select = styled.select`
   width: 100%;
-  border: 1px solid #281e42;
+  border: 1px solid ${colors.primaryColor};
   border-radius: 10px;
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
-  ${(props: InputProps) => props.isError && "border: 1px solid #e80000;"}
+  ${(props: InputProps) =>
+    props.isError && `border: 1px solid ${colors.errorColor};`}
 
   &:focus-visible {
-    outline: solid #281e42 1px;
+    outline: solid ${colors.primaryColor} 1px;
   }
 `;
 
 export const Textarea = styled.textarea`
   width: 100%;
-  border: 1px solid #281e42;
+  border: 1px solid ${colors.primaryColor};
   border-radius: 10px;
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
 
   &:focus-visible {
-    outline: solid #281e42 1px;
+    outline: solid ${colors.primaryColor} 1px;
   }
 `;
 
 export const PrimaryButton = styled.button`
   width: 100%;
   border: 0;
-  background-color: #f0a6ca;
+  background-color: ${colors.buttonColor};
   font-size: 25px;
-  color: #281e42;
+  color: ${colors.primaryColor};
   font-weight: 400;
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 10px;
 
   &:focus-visible {
-    outline: solid #281e42 3px;
+    outline: solid ${colors.primaryColor} 3px;
   }
 `;
 
 export const RequiredStar = styled.span`
-  color: #635784;
+  color: ${colors.secondaryColor};
 `;
 
 export const RequiredText = styled.p`
-  color: #635784;
+  color: ${colors.secondaryColor};
   font-size: 20px;
   margin-top: 10px;
   animation: ${FadeInUp} 1s;
 `;
 
 export const ErrorMessage = styled.p`
-  color: #e80000;
+  color: ${colors.errorColor};
   margin-top: 5px;
   font-size: 17px;
 `;

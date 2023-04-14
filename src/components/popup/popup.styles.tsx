@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled, { keyframes } from "styled-components";
 
 interface Props {
@@ -25,5 +26,6 @@ export const PopupContainer = styled.div`
   transform: translateX(-50%);
   animation: ${PopupAnimation} 1s;
 
-  ${(props: Props) => props.isError && "border: 3px solid #e80000;"}
+  ${(props: Props) =>
+    props.isError && `border: 3px solid ${colors.errorColor};`}
 `;

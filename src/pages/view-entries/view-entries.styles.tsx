@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled from "styled-components";
 import { FadeInUp } from "../../global";
 
@@ -26,9 +27,9 @@ export const TableLabelsContainer = styled.div`
 
   p {
     font-size: 21px;
-    color: #382e54;
+    color: ${colors.primaryColor};
     padding-bottom: 7px;
-    border-bottom: 1px solid #382e54;
+    border-bottom: 1px solid ${colors.primaryColor};
   }
 `;
 
@@ -48,16 +49,16 @@ export const PageButtonsContainer = styled.div`
   animation: ${FadeInUp} 1s;
 
   span {
-    color: #201639;
+    color: ${colors.primaryColor};
   }
 `;
 
 export const PageButton = styled.button`
   border: none;
   cursor: pointer;
-  color: ${(props: Props) => (props.isActive ? "#fff" : "#201639")};
+  color: ${(props: Props) => (props.isActive ? "#fff" : colors.primaryColor)};
   background-color: ${(props: Props) =>
-    props.isActive ? "#635784" : "#f0e6ef"};
+    props.isActive ? colors.secondaryColor : colors.tertiaryColor};
   font-size: 18px;
   padding: 10px;
   width: 40px;
@@ -65,21 +66,21 @@ export const PageButton = styled.button`
   border-radius: 4px;
 
   &:focus-visible {
-    outline: solid #333 3px;
+    outline: solid ${colors.primaryColor} 3px;
   }
 `;
 
 export const LastAndFirstPageButton = styled.button`
   border: none;
   cursor: pointer;
-  color: ${(props: Props) => (props.isActive ? "#fff" : "#201639")};
+  color: ${(props: Props) => (props.isActive ? "#fff" : colors.primaryColor)};
   background-color: ${(props: Props) =>
-    props.isActive ? "#635784" : "#f0e6ef"};
+    props.isActive ? colors.secondaryColor : colors.tertiaryColor};
   font-size: 18px;
   padding: 10px;
 
   &:focus-visible {
-    outline: solid #333 3px;
+    outline: solid ${colors.primaryColor} 3px;
   }
 `;
 
@@ -103,10 +104,10 @@ export const EntriesPerPageContainer = styled.div`
 
   select {
     border: none;
-    border-bottom: 1px solid #382e54;
+    border-bottom: 1px solid ${colors.primaryColor};
 
     &:focus-visible {
-      outline: solid 3px #382e54;
+      outline: solid 3px ${colors.primaryColor};
     }
   }
 `;

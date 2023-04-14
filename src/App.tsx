@@ -24,6 +24,7 @@ import ViewEntriesPage from "./pages/view-entries/view-entries.component";
 import AnalyticsPage from "./pages/analytics/analytics.component";
 import { onValue, ref } from "firebase/database";
 import { EntryEntity } from "./utils/interfaces";
+import ProfilePage from "./pages/profile/profile.component";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
@@ -119,6 +120,18 @@ const App: React.FC = () => {
                   type="app"
                 >
                   <AnalyticsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  user={currentUser}
+                  redirectTo="/login"
+                  type="app"
+                >
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />
