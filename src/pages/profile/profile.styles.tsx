@@ -2,6 +2,10 @@ import { FadeInUp } from "src/global";
 import { colors } from "src/utils/variables";
 import styled from "styled-components";
 
+interface Props {
+  isVerified?: boolean;
+}
+
 export const UserInformationContainer = styled.div`
   border-bottom: 1px solid ${colors.primaryColor};
   padding: 31px 37px;
@@ -80,7 +84,58 @@ export const CancelNameButton = styled.button`
   }
 `;
 
-export const UpdatePasswordContainer = styled.div`
+export const UpdatePasswordSectionContainer = styled.div`
   padding: 20px 32px;
   animation: ${FadeInUp} 1s;
+`;
+
+export const EmailSectionContainer = styled.div`
+  padding: 20px 32px;
+  animation: ${FadeInUp} 1s;
+  border-bottom: 1px solid ${colors.primaryColor};
+
+  .label {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  button {
+    font-size: 22px;
+    color: ${colors.primaryColor};
+    background-color: ${colors.buttonColor};
+    border: none;
+    border-radius: 10px;
+    padding: 11px 70px;
+    cursor: pointer;
+    margin-top: 15px;
+
+    &:focus-visible {
+      outline: solid ${colors.primaryColor} 3px;
+    }
+  }
+`;
+
+export const VerificationMessageContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  align-items: center;
+`;
+
+export const VerificationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 40px;
+`;
+
+export const EmailText = styled.p`
+  font-size: 20px;
+  color: ${(props: Props) =>
+    props.isVerified ? colors.primaryColor : colors.dangerColor};
+`;
+
+export const IsVerifiedText = styled.p`
+  font-size: 18px;
+
+  color: ${(props: Props) =>
+    props.isVerified ? "#00AF46" : colors.dangerColor};
 `;

@@ -21,12 +21,17 @@ import { colors } from "src/utils/variables";
 import {
   CancelNameButton,
   EditNameButton,
+  EmailSectionContainer,
+  EmailText,
+  IsVerifiedText,
   NameContainer,
   NameInput,
   NameInputContainer,
   SaveNameButton,
-  UpdatePasswordContainer,
+  UpdatePasswordSectionContainer,
   UserInformationContainer,
+  VerificationContainer,
+  VerificationMessageContainer,
 } from "./profile.styles";
 // import { PageContainer } from "src/global";
 
@@ -113,6 +118,10 @@ const ProfilePage: React.FC = () => {
     setIsNameBeingUpdated(false);
   };
 
+  const handleVerifyEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log("NEEDS TO SEND VERIFICATION EMAIL");
+  };
+
   useEffect(() => {
     const starCountRef = ref(db, `/users/${user?.userID}`);
     onValue(starCountRef, (snapshot) => {
@@ -177,7 +186,42 @@ const ProfilePage: React.FC = () => {
           </NameContainer>
         )}
       </UserInformationContainer>
-      <UpdatePasswordContainer>
+      <EmailSectionContainer>
+        <p className="label">Email:</p>
+
+        <VerificationContainer>
+          <EmailText>{user?.email}</EmailText>
+          <VerificationMessageContainer>
+            {user?.emailVerified ? (
+              <>
+                <Icon
+                  icon="ion:checkmark-done-circle-outline"
+                  width="20"
+                  color="#00AF46"
+                />
+                <IsVerifiedText isVerified={user ? user.emailVerified : false}>
+                  Verified
+                </IsVerifiedText>
+              </>
+            ) : (
+              <>
+                <Icon
+                  icon="material-symbols:warning-outline-rounded"
+                  width="20"
+                  color={colors.dangerColor}
+                />
+                <IsVerifiedText isVerified={user ? user.emailVerified : false}>
+                  Not Verified
+                </IsVerifiedText>
+              </>
+            )}
+          </VerificationMessageContainer>
+        </VerificationContainer>
+        {!user?.emailVerified && (
+          <button onClick={handleVerifyEmail}>Verify</button>
+        )}
+      </EmailSectionContainer>
+      <UpdatePasswordSectionContainer>
         <Heading3>Update Password</Heading3>
         <br />
         <form onSubmit={handleSubmitUpdatePassword}>
@@ -215,7 +259,7 @@ const ProfilePage: React.FC = () => {
           </InputContainer>
           <PrimaryButton>Update</PrimaryButton>
         </form>
-      </UpdatePasswordContainer>
+      </UpdatePasswordSectionContainer>
     </>
   );
 };
