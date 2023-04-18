@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
+import { sendEmailVerification } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { db } from "src/firebase";
+import { auth, db } from "src/firebase";
 import {
   ErrorMessage,
   Heading3,
@@ -50,6 +51,7 @@ const ProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUserEntity);
   const fullName = useAppSelector(selectFullName);
+  const userInstance = auth.currentUser;
 
   const handleSubmitUpdatePassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -119,7 +121,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleVerifyEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("NEEDS TO SEND VERIFICATION EMAIL");
+    sendEmailVerification(userInstance!);
   };
 
   useEffect(() => {

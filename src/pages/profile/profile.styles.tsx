@@ -130,7 +130,7 @@ export const VerificationContainer = styled.div`
 export const EmailText = styled.p`
   font-size: 20px;
   color: ${(props: Props) =>
-    props.isVerified ? colors.primaryColor : colors.dangerColor};
+    !props.isVerified ? colors.primaryColor : colors.dangerColor};
 `;
 
 export const IsVerifiedText = styled.p`
