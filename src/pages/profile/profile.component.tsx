@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification, updatePassword } from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "src/firebase";
@@ -93,15 +93,28 @@ const ProfilePage: React.FC = () => {
 
     // Update password
     setPasswordErrors({});
-
-    // Display popup
-    dispatch(
-      updatePopup({
-        isError: false,
-        isPopupActive: true,
-        message: "✅ Password has been updated",
+    updatePassword(userInstance!, newPassword)
+      .then(() => {
+        // Display popup
+        dispatch(
+          updatePopup({
+            isError: false,
+            isPopupActive: true,
+            message: "✅ Password has been updated",
+          })
+        );
+        setNewPassword("");
+        setConfirmPassword("");
       })
-    );
+      .catch((err) =>
+        dispatch(
+          updatePopup({
+            isError: true,
+            isPopupActive: true,
+            message: "💥 Something went wrong, please try again",
+          })
+        )
+      );
   };
 
   const handleSaveUpdatedName = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -129,10 +142,7 @@ const ProfilePage: React.FC = () => {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        console.log(data);
         dispatch(updateFullName(data.fullName));
-      } else {
-        // dispatch(updateEntries([]));
       }
     });
     // eslint-disable-next-line
@@ -192,7 +202,9 @@ const ProfilePage: React.FC = () => {
         <p className="label">Email:</p>
 
         <VerificationContainer>
-          <EmailText>{user?.email}</EmailText>
+          <EmailText isVerified={user ? user.emailVerified : false}>
+            {user?.email}
+          </EmailText>
           <VerificationMessageContainer>
             {user?.emailVerified ? (
               <>
