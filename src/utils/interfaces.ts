@@ -27,6 +27,7 @@ export interface HelpersState {
 export interface UserState {
   userObject: UserObject;
   entries: [] | EntryEntity[];
+  fullName: string;
 }
 
 export interface EntryEntity {

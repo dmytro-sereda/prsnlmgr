@@ -62,6 +62,8 @@ export const Input = styled.input`
   padding: 10px;
   font-size: 18px;
   margin-top: 10px;
+  max-width: 440px;
+
   ${(props: InputProps) =>
     props.isError && `border: 1px solid ${colors.errorColor};`}
 
@@ -136,6 +138,7 @@ export const PrimaryButton = styled.button`
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 10px;
+  max-width: 440px;
 
   &:focus-visible {
     outline: solid ${colors.primaryColor} 3px;

@@ -12,3 +12,8 @@ export const selectEntries = createSelector(
   [selectUser],
   (user) => user.entries
 );
+
+export const selectFullName = createSelector(
+  [selectUser],
+  (user) => user.fullName
+);

@@ -30,7 +30,6 @@ const ViewEntriesPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   // Divide into pages
-
   useEffect(() => {
     if (entries.length) {
       const newNumberOfPages = Math.ceil(entries.length / limitEntriesPerPage);
