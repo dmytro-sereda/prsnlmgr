@@ -224,7 +224,7 @@ const AnalyticsPage: React.FC = () => {
       <Heading3>Analytics based on your data</Heading3>
 
       <ChartsContainer>
-        <MultiValueChart>
+        <MultiValueChart data-cy="pieChartContainer">
           <MonthSelect
             name="categoryMonth"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -278,15 +278,15 @@ const AnalyticsPage: React.FC = () => {
           )}
 
           <SingleValueChartsContainer>
-            <SingleValueContainer>
-              <SingleValueCaptionText>Last month</SingleValueCaptionText>
+            <SingleValueContainer data-cy="singleValueAmount">
+              <SingleValueCaptionText>Last month </SingleValueCaptionText>
               <SingleValueNumberValue>
                 ${(lastMonthAmount / 1000).toFixed(2)}k
               </SingleValueNumberValue>
-              <SingleValueCaptionText>spent</SingleValueCaptionText>
+              <SingleValueCaptionText> spent</SingleValueCaptionText>
             </SingleValueContainer>
 
-            <SingleValueContainer>
+            <SingleValueContainer data-cy="singleValueCategory">
               {mostSpentCategory ? (
                 <>
                   <SingleValueCaptionText>Spent most on</SingleValueCaptionText>

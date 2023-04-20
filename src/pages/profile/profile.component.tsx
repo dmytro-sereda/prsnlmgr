@@ -130,6 +130,7 @@ const ProfilePage: React.FC = () => {
       },
     });
 
+    setNewName("");
     setIsNameBeingUpdated(false);
   };
 
@@ -168,8 +169,12 @@ const ProfilePage: React.FC = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setNewName(e.currentTarget.value);
               }}
+              data-cy="editNameInput"
             />
-            <SaveNameButton onClick={handleSaveUpdatedName}>
+            <SaveNameButton
+              data-cy="saveNameButton"
+              onClick={handleSaveUpdatedName}
+            >
               Save
             </SaveNameButton>
             <CancelNameButton
@@ -182,12 +187,13 @@ const ProfilePage: React.FC = () => {
             </CancelNameButton>
           </NameInputContainer>
         ) : (
-          <NameContainer>
+          <NameContainer data-cy="userName">
             {fullName ? <p>{fullName}</p> : <p>Unknown</p>}
             <EditNameButton
               onClick={() => {
                 setIsNameBeingUpdated(true);
               }}
+              data-cy="editNameButton"
             >
               <Icon
                 icon="ic:baseline-edit"
@@ -202,7 +208,10 @@ const ProfilePage: React.FC = () => {
         <p className="label">Email:</p>
 
         <VerificationContainer>
-          <EmailText isVerified={user ? user.emailVerified : false}>
+          <EmailText
+            data-cy="emailText"
+            isVerified={user ? user.emailVerified : false}
+          >
             {user?.email}
           </EmailText>
           <VerificationMessageContainer>
@@ -213,7 +222,10 @@ const ProfilePage: React.FC = () => {
                   width="20"
                   color="#00AF46"
                 />
-                <IsVerifiedText isVerified={user ? user.emailVerified : false}>
+                <IsVerifiedText
+                  data-cy="isVerifiedText"
+                  isVerified={user ? user.emailVerified : false}
+                >
                   Verified
                 </IsVerifiedText>
               </>
@@ -224,7 +236,10 @@ const ProfilePage: React.FC = () => {
                   width="20"
                   color={colors.dangerColor}
                 />
-                <IsVerifiedText isVerified={user ? user.emailVerified : false}>
+                <IsVerifiedText
+                  data-cy="isVerifiedText"
+                  isVerified={user ? user.emailVerified : false}
+                >
                   Not Verified
                 </IsVerifiedText>
               </>
@@ -252,7 +267,9 @@ const ProfilePage: React.FC = () => {
               isError={passwordErrors.newPassword}
             />
             {passwordErrors.newPassword && (
-              <ErrorMessage>{passwordErrors.newPassword}</ErrorMessage>
+              <ErrorMessage data-cy="newPasswordError">
+                {passwordErrors.newPassword}
+              </ErrorMessage>
             )}
           </InputContainer>
           <InputContainer>
@@ -268,7 +285,9 @@ const ProfilePage: React.FC = () => {
               isError={passwordErrors.confirmNewPassword}
             />
             {passwordErrors.confirmNewPassword && (
-              <ErrorMessage>{passwordErrors.confirmNewPassword}</ErrorMessage>
+              <ErrorMessage data-cy="confirmNewPasswordError">
+                {passwordErrors.confirmNewPassword}
+              </ErrorMessage>
             )}
           </InputContainer>
           <PrimaryButton>Update</PrimaryButton>

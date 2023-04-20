@@ -56,6 +56,7 @@ const Header: React.FC = () => {
         <>
           <ProfileContainer>
             <ProfileButton
+              data-cy="profileButton"
               onClick={() => {
                 dispatch(updateIsDropdownOpen(!isDropdownOpen));
               }}
