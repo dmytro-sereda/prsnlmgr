@@ -13,6 +13,16 @@ export const UserInformationContainer = styled.div`
   align-items: center;
   gap: 25px;
   animation: ${FadeInUp} 1s;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: 660px) {
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 450px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 `;
 
 export const NameContainer = styled.div`
@@ -41,6 +51,21 @@ export const NameInputContainer = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: center;
+
+  @media only screen and (max-width: 450px) {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+
+    input {
+      border-radius: 10px;
+    }
+
+    button {
+      border-radius: 10px;
+      padding: 12px;
+    }
+  }
 `;
 
 export const NameInput = styled.input`
@@ -52,6 +77,14 @@ export const NameInput = styled.input`
 
   &:focus-visible {
     outline: solid ${colors.primaryColor} 1px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: auto;
+  }
+
+  @media only screen and (max-width: 450px) {
+    width: 100%;
   }
 `;
 
