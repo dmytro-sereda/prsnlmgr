@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled from "styled-components";
 interface Props {
   isActive: boolean;
@@ -29,11 +30,13 @@ export const NavigationListItem = styled.li`
     font-weight: 400;
 
     &:hover {
-      ${(props: Props) => !props.isActive && "background-color: #635784;"}
+      ${(props: Props) =>
+        !props.isActive && `background-color: ${colors.secondaryColor};`}
     }
 
     ${(props: Props) =>
-      props.isActive && "background-color: #F0A6CA; color: #382E54;"}
+      props.isActive &&
+      `background-color: ${colors.buttonColor}; color: ${colors.primaryColor};`}
 
     &:focus-visible {
       outline: solid #fff 1px;

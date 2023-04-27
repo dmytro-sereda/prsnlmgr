@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled from "styled-components";
 import { FadeInUp } from "../../global";
 
@@ -21,7 +22,7 @@ export const SignUpTextContainer = styled.div`
   }
 
   a {
-    color: #635783;
+    color: ${colors.primaryColor};
     font-size: 18px;
     @media only screen and (max-width: 370px) {
       font-size: 17px;

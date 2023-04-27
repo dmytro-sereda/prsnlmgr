@@ -16,7 +16,7 @@ import { selectEntryBeingEdited } from "../../redux/helpers/helpers.selector";
 import { ref, update } from "firebase/database";
 import { db } from "../../firebase";
 import { selectUserEntity } from "../../redux/user/user.selectors";
-import { monthNames } from "../../utils/variables";
+import { colors, monthNames } from "../../utils/variables";
 import { schemaFactory } from "../../utils/schemaFactory";
 
 interface Props {
@@ -178,7 +178,11 @@ const Entry: React.FC<Props> = ({ entry }) => {
             data-cy="editButton"
             onClick={() => dispatch(updateEntryBeingEdited(entry.id))}
           >
-            <Icon icon="ic:baseline-edit" width="19" color="#382E54" />
+            <Icon
+              icon="ic:baseline-edit"
+              width="19"
+              color={colors.primaryColor}
+            />
           </EditButton>
           <DeleteButton data-cy="deleteButton" onClick={handleDeleteButton}>
             <Icon icon="ph:trash" width="19" color="#fff" />

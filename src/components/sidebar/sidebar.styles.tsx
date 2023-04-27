@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled, { keyframes } from "styled-components";
 
 interface Props {
@@ -19,7 +20,11 @@ const SidebarFadeIn = keyframes`
 export const SidebarContainer = styled.div`
   min-height: 100vh;
   width: 420px;
-  background-image: linear-gradient(115deg, #201639, #635784);
+  background-image: linear-gradient(
+    115deg,
+    ${colors.primaryColor},
+    ${colors.secondaryColor}
+  );
   padding: 20px 0;
   display: flex;
   flex-direction: column;
@@ -35,6 +40,7 @@ export const SidebarContainer = styled.div`
     transform: ${(props: Props) =>
       props.isOpen ? "translateX(0%)" : "translateX(-100%)"};
     animation: none;
+    z-index: 1;
   }
 
   @media only screen and (max-width: 500px) {

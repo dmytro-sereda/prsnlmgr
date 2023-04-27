@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled, { keyframes } from "styled-components";
 
 const HeaderFadeIn = keyframes`
@@ -17,8 +18,8 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 20px 41px;
-  background-color: #f0e6ef;
-  border-bottom: 1px solid #22183b;
+  background-color: ${colors.tertiaryColor};
+  border-bottom: 1px solid ${colors.primaryColor};
   animation: ${HeaderFadeIn} 1s;
 
   .logo {
@@ -44,7 +45,7 @@ export const HeaderContainer = styled.header`
 `;
 
 export const HeaderButton = styled.button`
-  background-color: #f0a6ca;
+  background-color: ${colors.buttonColor};
   color: #281e42;
   border-radius: 10px;
   padding: 10px 60px;
@@ -53,7 +54,7 @@ export const HeaderButton = styled.button`
   border: 0;
 
   &:focus-visible {
-    outline: solid #281e42 3px;
+    outline: solid ${colors.primaryColor} 3px;
   }
 
   @media only screen and (max-width: 500px) {
@@ -66,4 +67,20 @@ export const LeftSideHeader = styled.div`
   display: flex;
   align-items: center;
   margin-right: 20px;
+`;
+
+export const ProfileButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 3px solid ${colors.primaryColor};
+  }
+`;
+
+export const ProfileContainer = styled.div`
+  position: relative;
 `;

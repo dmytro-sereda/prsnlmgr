@@ -22,3 +22,8 @@ export const selectIsMenuOpen = createSelector(
   [selectHelpers],
   (user) => user.isMenuOpen
 );
+
+export const selectIsDropdownOpen = createSelector(
+  [selectHelpers],
+  (user) => user.isDropdownOpen
+);

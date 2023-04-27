@@ -9,6 +9,7 @@ const initialState: HelpersState = {
   },
   isMenuOpen: false,
   entryBeingEdited: "",
+  isDropdownOpen: false,
 };
 
 const helpersSlice = createSlice({
@@ -27,6 +28,9 @@ const helpersSlice = createSlice({
     updateIsMenuOpen(state, action: PayloadAction<boolean>) {
       state.isMenuOpen = action.payload;
     },
+    updateIsDropdownOpen(state, action: PayloadAction<boolean>) {
+      state.isDropdownOpen = action.payload;
+    },
   },
 });
 
@@ -35,6 +39,7 @@ export const {
   updatePopup,
   updateEntryBeingEdited,
   updateIsMenuOpen,
+  updateIsDropdownOpen,
 } = helpersSlice.actions;
 
 export default helpersSlice.reducer;

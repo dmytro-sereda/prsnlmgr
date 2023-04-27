@@ -4,6 +4,8 @@ import { EntryEntity, UserObject, UserState } from "../../utils/interfaces";
 const initialState: UserState = {
   userObject: null,
   entries: [],
+  fullName: "",
+  hasCompletedGuide: true,
 };
 
 const userSlice = createSlice({
@@ -16,9 +18,20 @@ const userSlice = createSlice({
     updateEntries(state, action: PayloadAction<[] | EntryEntity[]>) {
       state.entries = action.payload;
     },
+    updateFullName(state, action: PayloadAction<string>) {
+      state.fullName = action.payload;
+    },
+    updateHasCompletedGuide(state, action: PayloadAction<boolean>) {
+      state.hasCompletedGuide = action.payload;
+    },
   },
 });
 
-export const { updateUserObject, updateEntries } = userSlice.actions;
+export const {
+  updateUserObject,
+  updateEntries,
+  updateFullName,
+  updateHasCompletedGuide,
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,3 +1,4 @@
+import { colors } from "src/utils/variables";
 import styled from "styled-components";
 
 interface Props {
@@ -19,14 +20,14 @@ export const HamburgerContainer = styled.button`
   display: none;
 
   &:focus-visible {
-    outline: solid 3px #333;
+    outline: solid 3px ${colors.primaryColor};
   }
 
   div {
     width: 2rem;
     height: 0.25rem;
     background-color: ${(props: Props) =>
-      props.isOpen ? "#F0A6CA" : "#281e42"};
+      props.isOpen ? colors.buttonColor : colors.primaryColor};
     border-radius: 10px;
     transition: all 0.3s;
     position: relative;

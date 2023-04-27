@@ -11,8 +11,15 @@ import { auth, db } from "./firebase";
 import CreateEntryPage from "./pages/create-entry/create-entry.component";
 import Sidebar from "./components/sidebar/sidebar.component";
 import { useAppDispatch, useAppSelector } from "./utils/hooks";
-import { selectUserEntity } from "./redux/user/user.selectors";
-import { updateEntries, updateUserObject } from "./redux/user/user.reducer";
+import {
+  selectHasCompletedGuide,
+  selectUserEntity,
+} from "./redux/user/user.selectors";
+import {
+  updateEntries,
+  updateUserObject,
+  updateHasCompletedGuide,
+} from "./redux/user/user.reducer";
 import ProtectedRoute from "./components/protected-route/protected-route.component";
 import Popup from "./components/popup/popup.component";
 import {
@@ -24,11 +31,14 @@ import ViewEntriesPage from "./pages/view-entries/view-entries.component";
 import AnalyticsPage from "./pages/analytics/analytics.component";
 import { onValue, ref } from "firebase/database";
 import { EntryEntity } from "./utils/interfaces";
+import ProfilePage from "./pages/profile/profile.component";
+import Guide from "./components/guide/guide.component";
 
 const App: React.FC = () => {
   const currentUser = useAppSelector(selectUserEntity);
   const isPopupActive = useAppSelector(selectIsPopupActive);
   const isMenuOpen = useAppSelector(selectIsMenuOpen);
+  const hasCompletedGuide = useAppSelector(selectHasCompletedGuide);
 
   const dispatch = useAppDispatch();
 
@@ -63,14 +73,26 @@ const App: React.FC = () => {
   // Load entries and update global state
   useEffect(() => {
     if (currentUser) {
-      const starCountRef = ref(db, `/entries/${currentUser?.userID}`);
-      onValue(starCountRef, (snapshot) => {
+      // Get entries
+      const userRef = ref(db, `/entries/${currentUser?.userID}`);
+      onValue(userRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {
           const entriesArray: [] | EntryEntity[] = Object.values(data);
           dispatch(updateEntries(entriesArray));
         } else {
           dispatch(updateEntries([]));
+        }
+      });
+
+      // Get guide info
+      const guideRef = ref(db, `/users/${currentUser?.userID}`);
+      onValue(guideRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data.hasCompletedGuide) {
+          dispatch(updateHasCompletedGuide(data.hasCompletedGuide));
+        } else {
+          dispatch(updateHasCompletedGuide(false));
         }
       });
     }
@@ -82,7 +104,12 @@ const App: React.FC = () => {
       <GlobaStyle />
       {isPopupActive && <Popup />}
       <ApplicationContainer>
-        {currentUser && <Sidebar isOpen={isMenuOpen} />}
+        {currentUser && (
+          <>
+            {!hasCompletedGuide && <Guide />}
+            <Sidebar isOpen={isMenuOpen} />
+          </>
+        )}
         <ApplicationRightSideContainer>
           <Header />
           <Routes>
@@ -119,6 +146,18 @@ const App: React.FC = () => {
                   type="app"
                 >
                   <AnalyticsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute
+                  user={currentUser}
+                  redirectTo="/login"
+                  type="app"
+                >
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />

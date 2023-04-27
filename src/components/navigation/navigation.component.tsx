@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { updateIsMenuOpen } from "../../redux/helpers/helpers.reducer";
+import {
+  updateEntryBeingEdited,
+  updateIsDropdownOpen,
+  updateIsMenuOpen,
+} from "../../redux/helpers/helpers.reducer";
 import { useAppDispatch } from "../../utils/hooks";
 import {
   NavigationContainer,
@@ -19,6 +23,9 @@ const Navigation: React.FC = () => {
 
   useEffect(() => {
     setActiveLink(location.pathname);
+    dispatch(updateIsDropdownOpen(false));
+    dispatch(updateEntryBeingEdited(""));
+    // eslint-disable-next-line
   }, [location]);
 
   return (

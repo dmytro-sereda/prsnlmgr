@@ -21,11 +21,14 @@ export interface HelpersState {
   popup: Popup;
   entryBeingEdited: string;
   isMenuOpen: boolean;
+  isDropdownOpen: boolean;
 }
 
 export interface UserState {
   userObject: UserObject;
   entries: [] | EntryEntity[];
+  fullName: string;
+  hasCompletedGuide: boolean;
 }
 
 export interface EntryEntity {

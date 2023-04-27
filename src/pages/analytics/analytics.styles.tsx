@@ -1,14 +1,15 @@
+import { colors } from "src/utils/variables";
 import styled, { keyframes } from "styled-components";
 
 const ChartAppearenceAnimation = keyframes`
   0%{
     opacity: 0;
-    margin-top: 20px;
+    transform: translateY(20px);
   }
   
   100%{
     opacity: 1;
-    margin-top: 0;
+    transform: translateY(0);
   }
 `;
 
@@ -16,7 +17,7 @@ export const SingleValueContainer = styled.div`
   width: 210px;
   height: 210px;
   border-radius: 10px;
-  background-color: #f0e6ef;
+  background-color: ${colors.tertiaryColor};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -37,20 +38,20 @@ export const SingleValueNumberValue = styled.p`
   font-size: 50px;
   font-weight: 900;
   margin: 15px 0;
-  color: #625683;
+  color: ${colors.secondaryColor};
 `;
 
 export const SingleValueTextValue = styled.p`
   font-size: 30px;
   font-weight: 900;
   margin: 15px 0;
-  color: #625683;
+  color: ${colors.secondaryColor};
 `;
 
 export const MultiValueChart = styled.div`
   max-width: 440px;
   width: 100%;
-  background-color: #f0e6ef;
+  background-color: ${colors.tertiaryColor};
   border-radius: 5px;
   font-weight: 300;
   animation: ${ChartAppearenceAnimation} 1s;

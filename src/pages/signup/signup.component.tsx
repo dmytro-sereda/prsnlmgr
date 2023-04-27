@@ -1,4 +1,7 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../../firebase";
 import React from "react";
 import AuthForm from "../../components/auth-form/auth-form.component";
@@ -23,6 +26,8 @@ const SignupPage: React.FC = () => {
       credentials.password
     )
       .then((userCredential) => {
+        sendEmailVerification(userCredential.user);
+
         // Signed in
         navigate("/");
       })
