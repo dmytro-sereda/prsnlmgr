@@ -5,6 +5,7 @@ const initialState: UserState = {
   userObject: null,
   entries: [],
   fullName: "",
+  hasCompletedGuide: true,
 };
 
 const userSlice = createSlice({
@@ -20,10 +21,17 @@ const userSlice = createSlice({
     updateFullName(state, action: PayloadAction<string>) {
       state.fullName = action.payload;
     },
+    updateHasCompletedGuide(state, action: PayloadAction<boolean>) {
+      state.hasCompletedGuide = action.payload;
+    },
   },
 });
 
-export const { updateUserObject, updateEntries, updateFullName } =
-  userSlice.actions;
+export const {
+  updateUserObject,
+  updateEntries,
+  updateFullName,
+  updateHasCompletedGuide,
+} = userSlice.actions;
 
 export default userSlice.reducer;

@@ -28,6 +28,7 @@ export interface UserState {
   userObject: UserObject;
   entries: [] | EntryEntity[];
   fullName: string;
+  hasCompletedGuide: boolean;
 }
 
 export interface EntryEntity {

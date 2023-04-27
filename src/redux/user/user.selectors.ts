@@ -17,3 +17,8 @@ export const selectFullName = createSelector(
   [selectUser],
   (user) => user.fullName
 );
+
+export const selectHasCompletedGuide = createSelector(
+  [selectUser],
+  (user) => user.hasCompletedGuide
+);
