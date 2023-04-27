@@ -16,11 +16,18 @@ import FrontImage from "../../assets/front.png";
 import { ref, update } from "firebase/database";
 import { db } from "src/firebase";
 import { useAppSelector } from "src/utils/hooks";
-import { selectUserEntity } from "src/redux/user/user.selectors";
+import {
+  selectFullName,
+  selectUserEntity,
+} from "src/redux/user/user.selectors";
 
 const Guide: React.FC = () => {
+  // LOCAL STATE
   const [currentStep, setCurrentStep] = useState(0);
+
+  // GLOBAL STATE
   const user = useAppSelector(selectUserEntity);
+  const fullName = useAppSelector(selectFullName);
 
   const slides = [
     { text: "Welcome to the PrsnlMgr App", imageURL: FrontImage },
@@ -43,6 +50,7 @@ const Guide: React.FC = () => {
     update(ref(db), {
       [`users/${user?.userID}/`]: {
         hasCompletedGuide: true,
+        fullName,
       },
     });
   };

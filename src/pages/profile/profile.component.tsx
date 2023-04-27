@@ -15,6 +15,7 @@ import { updatePopup } from "src/redux/helpers/helpers.reducer";
 import { updateFullName } from "src/redux/user/user.reducer";
 import {
   selectFullName,
+  selectHasCompletedGuide,
   selectUserEntity,
 } from "src/redux/user/user.selectors";
 import { useAppDispatch, useAppSelector } from "src/utils/hooks";
@@ -51,6 +52,7 @@ const ProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUserEntity);
   const fullName = useAppSelector(selectFullName);
+  const hasCompletedGuide = useAppSelector(selectHasCompletedGuide);
   const userInstance = auth.currentUser;
 
   const handleSubmitUpdatePassword = (e: React.FormEvent<HTMLFormElement>) => {
@@ -127,6 +129,7 @@ const ProfilePage: React.FC = () => {
     update(ref(db), {
       [`users/${user?.userID}/`]: {
         fullName: newName,
+        hasCompletedGuide,
       },
     });
 
