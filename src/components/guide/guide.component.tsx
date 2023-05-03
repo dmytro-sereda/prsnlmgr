@@ -59,7 +59,7 @@ const Guide: React.FC = () => {
     <GuideContainer>
       <SliderContainer>
         {slides.map((s, i) => (
-          <Slide position={i - currentStep}>
+          <Slide key={i} position={i - currentStep}>
             <SlideDescription>{s.text}</SlideDescription>
             {s.imageURL && <img src={s.imageURL} alt="Test" />}
 

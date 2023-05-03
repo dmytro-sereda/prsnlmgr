@@ -172,3 +172,24 @@ export const IsVerifiedText = styled.p`
   color: ${(props: Props) =>
     props.isVerified ? "#00AF46" : colors.dangerColor};
 `;
+
+export const DangerZoneContainer = styled.div`
+  padding: 20px 32px;
+  border-top: 1px solid ${colors.primaryColor};
+  animation: ${FadeInUp} 1s;
+`;
+
+export const DeleteAccountButton = styled.button`
+  background-color: ${colors.dangerColor};
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+
+  &:focus-visible {
+    outline: solid ${colors.primaryColor} 3px;
+  }
+`;

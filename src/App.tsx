@@ -89,7 +89,7 @@ const App: React.FC = () => {
       const guideRef = ref(db, `/users/${currentUser?.userID}`);
       onValue(guideRef, (snapshot) => {
         const data = snapshot.val();
-        if (data.hasCompletedGuide) {
+        if (data && data.hasCompletedGuide) {
           dispatch(updateHasCompletedGuide(data.hasCompletedGuide));
         } else {
           dispatch(updateHasCompletedGuide(false));
