@@ -325,7 +325,10 @@ const ProfilePage: React.FC = () => {
 
       <DangerZoneContainer>
         <Heading3>Danger Zone</Heading3>
-        <DeleteAccountButton onClick={handleDeleteAccount}>
+        <DeleteAccountButton
+          data-cy="deleteButton"
+          onClick={handleDeleteAccount}
+        >
           Delete Account
         </DeleteAccountButton>
       </DangerZoneContainer>

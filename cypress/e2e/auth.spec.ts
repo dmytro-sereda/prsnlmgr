@@ -4,10 +4,10 @@ describe("Authentication works as expected", () => {
     cy.visit("/login");
   });
 
-  after(() => {
-    cy.logout();
-    cy.contains("h2", "Log in").should("be.visible");
-  });
+  // after(() => {
+  //   cy.logout();
+  //   cy.contains("h2", "Log in").should("be.visible");
+  // });
   it("Login page displays error with incorrect credentials", () => {
     // // Fill fields
     cy.get('[id="email"]').type("test123@gmail.com");
@@ -62,5 +62,46 @@ describe("Authentication works as expected", () => {
 
     // Assert the successfull login
     cy.get('[data-cy="sidebar"]').should("be.visible");
+  });
+
+  it("Successfull sign up and account deletion", () => {
+    const email = "testing.email@gmail.com";
+    const password = "testpassword";
+
+    // cy.login();
+    cy.contains("a", "Sign up").click();
+
+    // Create account
+    cy.get('[name="email"]').type(email);
+    cy.get('[name="password"]').type(password);
+    cy.contains("button", "Sign up").click();
+
+    // Enter new credentials
+
+    // Travel to profile page
+    cy.get('[data-cy="profileButton"]').click();
+    cy.contains("a", "Profile").click();
+
+    // Skip slide show
+    cy.contains("button", "Next").click();
+    cy.contains("div", "Create expense entries").within((item) =>
+      cy.wrap(item).contains("button", "Next").click()
+    );
+    cy.contains("div", "Customize your profile. All in one place!").within(
+      (item) => cy.wrap(item).contains("button", "Next").click()
+    );
+    cy.contains("div", "Easily manage your entries").within((item) =>
+      cy.wrap(item).contains("button", "Next").click()
+    );
+    cy.contains(
+      "div",
+      "Dynamic charts provide helpful insights on your expenditures!"
+    ).within((item) => cy.wrap(item).contains("button", "Done").click());
+
+    // Validate correct email
+    cy.get('[data-cy="emailText"]').should("have.text", email);
+
+    // Delete account
+    cy.get('[data-cy="deleteButton"]').click();
   });
 });
