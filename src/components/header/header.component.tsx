@@ -36,6 +36,9 @@ const Header: React.FC = () => {
       case "/analytics":
         setHeading("Analytics");
         break;
+      case "/profile":
+        setHeading("Profile");
+        break;
       default:
     }
   }, [location]);

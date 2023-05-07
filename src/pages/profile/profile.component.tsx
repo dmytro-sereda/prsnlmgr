@@ -1,5 +1,9 @@
 import { Icon } from "@iconify/react";
-import { sendEmailVerification, updatePassword } from "firebase/auth";
+import {
+  deleteUser,
+  sendEmailVerification,
+  updatePassword,
+} from "firebase/auth";
 import { onValue, ref, update } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { auth, db } from "src/firebase";
@@ -15,12 +19,15 @@ import { updatePopup } from "src/redux/helpers/helpers.reducer";
 import { updateFullName } from "src/redux/user/user.reducer";
 import {
   selectFullName,
+  selectHasCompletedGuide,
   selectUserEntity,
 } from "src/redux/user/user.selectors";
 import { useAppDispatch, useAppSelector } from "src/utils/hooks";
 import { colors } from "src/utils/variables";
 import {
   CancelNameButton,
+  DangerZoneContainer,
+  DeleteAccountButton,
   EditNameButton,
   EmailSectionContainer,
   EmailText,
@@ -51,7 +58,9 @@ const ProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUserEntity);
   const fullName = useAppSelector(selectFullName);
+  const hasCompletedGuide = useAppSelector(selectHasCompletedGuide);
   const userInstance = auth.currentUser;
+  const authUser = auth.currentUser;
 
   const handleSubmitUpdatePassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -127,6 +136,7 @@ const ProfilePage: React.FC = () => {
     update(ref(db), {
       [`users/${user?.userID}/`]: {
         fullName: newName,
+        hasCompletedGuide,
       },
     });
 
@@ -136,6 +146,25 @@ const ProfilePage: React.FC = () => {
 
   const handleVerifyEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
     sendEmailVerification(userInstance!);
+  };
+
+  const handleDeleteAccount = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to delete your account? This will permanently remove it from the system."
+    );
+
+    if (!confirmation) return;
+
+    // Delete account
+    deleteUser(authUser!).catch((err) =>
+      dispatch(
+        updatePopup({
+          isError: true,
+          isPopupActive: true,
+          message: err.message,
+        })
+      )
+    );
   };
 
   useEffect(() => {
@@ -293,6 +322,16 @@ const ProfilePage: React.FC = () => {
           <PrimaryButton>Update</PrimaryButton>
         </form>
       </UpdatePasswordSectionContainer>
+
+      <DangerZoneContainer>
+        <Heading3>Danger Zone</Heading3>
+        <DeleteAccountButton
+          data-cy="deleteButton"
+          onClick={handleDeleteAccount}
+        >
+          Delete Account
+        </DeleteAccountButton>
+      </DangerZoneContainer>
     </>
   );
 };
