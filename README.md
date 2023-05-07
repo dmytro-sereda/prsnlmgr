@@ -15,3 +15,9 @@ Finally, by clicking on the user icon in the top right corner, user can either l
 ## Application Technologies Overview
 
 This application is built with React TypeScript and [Redux.js](https://redux.js.org/) as a state management library. [Yup](https://www.npmjs.com/package/yup) is leveraged for custom and complex validation of the forms. Application implements authentication with [Firebase Authentication](https://firebase.google.com/docs/auth). [Firebase Realtime Database](https://firebase.google.com/docs/database) is a database where all the data is stored. [Cypress](https://docs.cypress.io/guides/getting-started/installing-cypress) is a tool used for writing End-to-End tests. In order to display charts in the Analytics, [react-chartjs-2](https://react-chartjs-2.js.org/) library is leveraged.
+
+## Available Scripts
+
+`npm start` - starts the application in the localhost
+
+`npm test` - starts cypress in the headless mode (needs an active running application in order to succeed)

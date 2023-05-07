@@ -36,7 +36,7 @@
     "start": "react-scripts  -r @cypress/instrument-cra start",
     "cypress:check-coverage": "npx nyc report --check-coverage --lines 90",
     "build": "react-scripts build",
-    "test": "npx cypress open",
+    "test": "npx cypress run",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
