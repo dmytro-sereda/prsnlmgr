@@ -186,7 +186,7 @@ const ClaimForm: React.FC = () => {
           <option value="clothes">Clothes</option>
           <option value="electronics">Electronics</option>
           <option value="accessorices">Accessorices</option>
-          <option value="pleasureEntertainment">
+          <option value="pleasure & entertainment">
             Pleasure & entertainment
           </option>
         </Select>

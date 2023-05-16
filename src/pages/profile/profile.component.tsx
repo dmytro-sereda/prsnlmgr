@@ -36,6 +36,7 @@ import {
   NameInput,
   NameInputContainer,
   SaveNameButton,
+  UpdatePasswordForm,
   UpdatePasswordSectionContainer,
   UserInformationContainer,
   VerificationContainer,
@@ -282,7 +283,7 @@ const ProfilePage: React.FC = () => {
       <UpdatePasswordSectionContainer>
         <Heading3>Update Password</Heading3>
         <br />
-        <form onSubmit={handleSubmitUpdatePassword}>
+        <UpdatePasswordForm onSubmit={handleSubmitUpdatePassword}>
           <InputContainer>
             <Label htmlFor="newPassword">New password:</Label>
             <Input
@@ -320,7 +321,7 @@ const ProfilePage: React.FC = () => {
             )}
           </InputContainer>
           <PrimaryButton>Update</PrimaryButton>
-        </form>
+        </UpdatePasswordForm>
       </UpdatePasswordSectionContainer>
 
       <DangerZoneContainer>
