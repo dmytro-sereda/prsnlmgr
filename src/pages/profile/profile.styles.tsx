@@ -23,6 +23,10 @@ export const UserInformationContainer = styled.div`
     flex-direction: column;
     gap: 15px;
   }
+
+  @media only screen and (max-width: 500px) {
+    padding: 20px;
+  }
 `;
 
 export const NameContainer = styled.div`
@@ -120,6 +124,10 @@ export const CancelNameButton = styled.button`
 export const UpdatePasswordSectionContainer = styled.div`
   padding: 20px 32px;
   animation: ${FadeInUp} 1s;
+
+  @media only screen and (max-width: 500px) {
+    padding: 20px;
+  }
 `;
 
 export const EmailSectionContainer = styled.div`
@@ -145,6 +153,10 @@ export const EmailSectionContainer = styled.div`
     &:focus-visible {
       outline: solid ${colors.primaryColor} 3px;
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    padding: 20px;
   }
 `;
 
@@ -177,6 +189,10 @@ export const DangerZoneContainer = styled.div`
   padding: 20px 32px;
   border-top: 1px solid ${colors.primaryColor};
   animation: ${FadeInUp} 1s;
+
+  @media only screen and (max-width: 500px) {
+    padding: 20px;
+  }
 `;
 
 export const DeleteAccountButton = styled.button`
@@ -191,5 +207,13 @@ export const DeleteAccountButton = styled.button`
 
   &:focus-visible {
     outline: solid ${colors.primaryColor} 3px;
+  }
+`;
+
+export const UpdatePasswordForm = styled.form`
+  max-width: 440px;
+
+  @media only screen and (max-width: 440px) {
+    max-width: 100%;
   }
 `;
