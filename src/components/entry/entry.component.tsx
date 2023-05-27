@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import {
   DeleteButton,
@@ -16,7 +16,7 @@ import { selectEntryBeingEdited } from "../../redux/helpers/helpers.selector";
 import { ref, update } from "firebase/database";
 import { db } from "../../firebase";
 import { selectUserEntity } from "../../redux/user/user.selectors";
-import { colors, monthNames } from "../../utils/variables";
+import { colors } from "../../utils/variables";
 import { schemaFactory } from "../../utils/schemaFactory";
 
 interface Props {
@@ -32,13 +32,6 @@ const Entry: React.FC<Props> = ({ entry }) => {
   const entryBeingEdited = useAppSelector(selectEntryBeingEdited);
   const user = useAppSelector(selectUserEntity);
   const dispatch = useAppDispatch();
-
-  // Date config
-  const date = new Date(entry.date);
-  const day = date.getDate();
-  const month = date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth();
-  const monthName = monthNames[date.getMonth()].slice(0, 3);
-  const year = date.getFullYear();
 
   const handleDeleteButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     const confirmation = window.confirm(
@@ -72,9 +65,14 @@ const Entry: React.FC<Props> = ({ entry }) => {
     // Validate data
     const errors: ClaimErrors = {};
     const entrySchema = schemaFactory(errors);
+
     try {
       await entrySchema.validate(
-        { ...entryUpdated, amountPaid: +entryUpdated.amountPaid },
+        {
+          ...entryUpdated,
+          amountPaid: +entryUpdated.amountPaid,
+          date: entryUpdated.date,
+        },
         { abortEarly: false }
       );
 
@@ -86,7 +84,7 @@ const Entry: React.FC<Props> = ({ entry }) => {
         [`entries/${user?.userID}/${entry.id}`]: {
           ...entryUpdated,
           amountPaid: +entryUpdated.amountPaid,
-          date: new Date(entryUpdated.date).getTime() + 86400000,
+          date: new Date(entryUpdated.date).getTime(),
         },
       });
 
@@ -103,6 +101,10 @@ const Entry: React.FC<Props> = ({ entry }) => {
       );
     }
   };
+
+  useEffect(() => {
+    setEntryUpdated(entry);
+  }, [entry]);
 
   return (
     <EntryContainer data-cy="entry">
@@ -125,9 +127,9 @@ const Entry: React.FC<Props> = ({ entry }) => {
           <input
             onChange={handleEditEntryChange}
             value={
-              typeof entryUpdated.date === "number"
-                ? `${year}-${month}-${day < 10 ? "0" + day : day}`
-                : entryUpdated.date
+              entryUpdated.date
+                ? new Date(entryUpdated.date).toISOString().split("T")[0]
+                : "0000-00-00"
             }
             name="date"
             type="date"
@@ -163,7 +165,7 @@ const Entry: React.FC<Props> = ({ entry }) => {
         <>
           <span>{entry.itemName}</span>
           <span>${entry.amountPaid.toFixed(2)}</span>
-          <span>{`${day} ${monthName} ${year}`}</span>
+          <span>{new Date(entryUpdated.date).toISOString().split("T")[0]}</span>
           <span>{entry.category}</span>
           <span>{entry.additionalInfo}</span>
         </>

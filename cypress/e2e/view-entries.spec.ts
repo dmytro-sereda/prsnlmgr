@@ -2,6 +2,7 @@ describe("View entries section works as expected", () => {
   before(() => {
     cy.login();
     cy.visit("/createEntry");
+
     // Create test records
     cy.addRecords(5);
   });
@@ -24,9 +25,9 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((item) => {
-        cy.wrap(item).get("span").eq(0).should("have.text", "Test Record");
-        cy.wrap(item).get("span").eq(1).should("have.text", "$1000.00");
-        cy.wrap(item).get("span").eq(2).should("have.text", "2 Mar 2023");
+        cy.wrap(item).get("span").eq(0).should("have.text", "Test Record 1");
+        cy.wrap(item).get("span").eq(1).should("have.text", "$500.00");
+        cy.wrap(item).get("span").eq(2).should("have.text", "2023-05-01");
         cy.wrap(item).get("span").eq(3).should("have.text", "food");
         cy.wrap(item)
           .get("span")
@@ -81,13 +82,22 @@ describe("View entries section works as expected", () => {
       .within((item) => {
         cy.wrap(item).get("span").eq(0).should("have.text", "Updated record");
         cy.wrap(item).get("span").eq(1).should("have.text", "$1200.00");
-        cy.wrap(item).get("span").eq(2).should("have.text", "4 Mar 2023");
+        cy.wrap(item).get("span").eq(2).should("have.text", "2023-03-04");
         cy.wrap(item).get("span").eq(3).should("have.text", "electronics");
         cy.wrap(item).get("span").eq(4).should("have.text", "");
       });
   });
 
   it("Pagination is displayed in the case of too many records", () => {
+    // Add new item
+    cy.contains("a", "Create an entry").click();
+    cy.get('[name="itemName"]').type(`New Item`);
+    cy.get('[name="amountPaid"]').clear().type(`200`);
+    cy.get('[name="date"]').type(`2023-01-01`);
+    cy.get('[name="category"]').select("Food");
+    cy.contains("button", "Submit").click();
+    cy.contains("a", "View entries").click();
+
     // Validate buttons
     cy.get('[data-cy="paginationButton"]').each((button, index) => {
       cy.wrap(button).should("have.text", index + 1);
@@ -141,7 +151,7 @@ describe("View entries section works as expected", () => {
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 1")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Updated record")
       );
 
     // Buttons should disappear
@@ -158,14 +168,14 @@ describe("View entries section works as expected", () => {
         cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 5")
       );
 
-    // Swithc back to date
+    // Switch back to date
     cy.get('[name="sortBy"]').select("Date (Asc)");
 
     // Now sort by date again
     cy.get('[data-cy="entry"]')
       .eq(0)
       .within((entry) =>
-        cy.wrap(entry).get("span").eq(0).should("have.text", "Test Record 1")
+        cy.wrap(entry).get("span").eq(0).should("have.text", "Updated record")
       );
   });
 });

@@ -62,7 +62,7 @@ const ClaimForm: React.FC = () => {
       // Write to db
       set(ref(db, `/entries/${user?.userID}/${entryId}`), {
         ...claim,
-        date: new Date(claim.date).getTime() + 86400000,
+        date: new Date(claim.date).getTime(),
         amountPaid: +claim.amountPaid,
         id: entryId,
       });
