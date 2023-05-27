@@ -156,6 +156,16 @@ const ProfilePage: React.FC = () => {
 
     if (!confirmation) return;
 
+    // Delete records
+    update(ref(db), {
+      [`entries/${user?.userID}/`]: null,
+    });
+
+    // Delete user instance
+    update(ref(db), {
+      [`users/${user?.userID}/`]: null,
+    });
+
     // Delete account
     deleteUser(authUser!).catch((err) =>
       dispatch(
