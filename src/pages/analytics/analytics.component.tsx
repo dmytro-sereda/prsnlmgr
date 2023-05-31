@@ -271,11 +271,17 @@ const AnalyticsPage: React.FC = () => {
         </MultiValueChart>
 
         <SingleAndMultiChartsContainer>
-          {barChartData && (
-            <MultiValueChart style={{ padding: "10px" }}>
+          <MultiValueChart style={{ padding: "10px" }}>
+            {barChartData ? (
               <Bar data={barChartData} options={barChartOptions} />
-            </MultiValueChart>
-          )}
+            ) : (
+              <NoDataAvailableMessageContainer>
+                <NoDataAvailableMessage>
+                  {pieChartMessage}
+                </NoDataAvailableMessage>
+              </NoDataAvailableMessageContainer>
+            )}
+          </MultiValueChart>
 
           <SingleValueChartsContainer>
             <SingleValueContainer data-cy="singleValueAmount">

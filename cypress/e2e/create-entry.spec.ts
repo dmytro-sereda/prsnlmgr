@@ -5,6 +5,8 @@ describe("Creating entry works as expected with validation", () => {
   });
 
   after(() => {
+    cy.contains("a", "View entries").click();
+    cy.removeRecords(1);
     cy.logout();
   });
 

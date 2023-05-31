@@ -29,9 +29,12 @@ Cypress.Commands.add("addRecords", (numberOfRecords: number) => {
     cy.get('[name="itemName"]').type(`Test Record ${i}`);
     cy.get('[name="amountPaid"]')
       .clear()
-      .type(`${500 - (i - 1) * 100}`);
+      .type(`${numberOfRecords * 100 - (i - 1) * 100}`);
     cy.get('[name="date"]').type(`2023-05-0${i}`);
     cy.get('[name="category"]').select("Food");
+    cy.get('[name="additionalInfo"]').type(
+      "This is some additional information"
+    );
 
     // Click submit button
     cy.contains("button", "Submit").click();

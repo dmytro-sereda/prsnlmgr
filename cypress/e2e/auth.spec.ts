@@ -76,12 +76,6 @@ describe("Authentication works as expected", () => {
     cy.get('[name="password"]').type(password);
     cy.contains("button", "Sign up").click();
 
-    // Enter new credentials
-
-    // Travel to profile page
-    cy.get('[data-cy="profileButton"]').click();
-    cy.contains("a", "Profile").click();
-
     // Skip slide show
     cy.contains("button", "Next").click();
     cy.contains("div", "Create expense entries").within((item) =>
@@ -97,6 +91,10 @@ describe("Authentication works as expected", () => {
       "div",
       "Dynamic charts provide helpful insights on your expenditures!"
     ).within((item) => cy.wrap(item).contains("button", "Done").click());
+
+    // Travel to profile page
+    cy.get('[data-cy="profileButton"]').click();
+    cy.contains("a", "Profile").click();
 
     // Validate correct email
     cy.get('[data-cy="emailText"]').should("have.text", email);
