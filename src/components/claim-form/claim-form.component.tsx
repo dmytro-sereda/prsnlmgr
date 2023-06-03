@@ -181,7 +181,7 @@ const ClaimForm: React.FC = () => {
           name="category"
           id="category"
           onChange={handleInputAndSelect}
-          isError={claimErrors.itemName}
+          isError={claimErrors.category}
         >
           <option value=""></option>
           <option value="food">Food</option>
