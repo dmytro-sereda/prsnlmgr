@@ -105,7 +105,8 @@ const ClaimForm: React.FC = () => {
 
       // Render errors
       setClaimErrors(errors);
-      // // Render popup
+
+      // Render popup
       dispatch(
         updatePopup({
           isError: true,

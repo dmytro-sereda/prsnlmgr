@@ -103,7 +103,10 @@ const Entry: React.FC<Props> = ({ entry }) => {
         errors[err.path] = err.message;
       });
 
+      // Render errors
       setEntryErrors(errors);
+
+      // Render popup
       dispatch(
         updatePopup({
           isError: true,
