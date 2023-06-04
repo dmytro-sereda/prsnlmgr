@@ -11,7 +11,7 @@ import {
 } from "../../global";
 import { updatePopup } from "../../redux/helpers/helpers.reducer";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { ClaimErrors } from "../../utils/interfaces";
+import { ClaimErrors, ValidationErrors } from "../../utils/interfaces";
 import { schemaFactory } from "../../utils/schemaFactory";
 import { ClaimFormContainer } from "./claim-form.styles";
 import { db } from "../../firebase";
@@ -46,8 +46,7 @@ const ClaimForm: React.FC = () => {
     e.preventDefault();
 
     // Validate input fields
-    const errors: ClaimErrors = {};
-    const claimSchema = schemaFactory(errors);
+    const claimSchema = schemaFactory();
 
     try {
       await claimSchema.validate(
@@ -96,9 +95,17 @@ const ClaimForm: React.FC = () => {
         category: "",
         additionalInfo: "",
       });
-    } catch (err) {
+    } catch (error: any) {
+      // Extract the error messages for the failed fields
+      const errors: ValidationErrors = {};
+
+      error.inner.forEach((err: any) => {
+        errors[err.path] = err.message;
+      });
+
       // Render errors
       setClaimErrors(errors);
+
       // Render popup
       dispatch(
         updatePopup({
@@ -174,7 +181,7 @@ const ClaimForm: React.FC = () => {
           name="category"
           id="category"
           onChange={handleInputAndSelect}
-          isError={claimErrors.itemName}
+          isError={claimErrors.category}
         >
           <option value=""></option>
           <option value="food">Food</option>

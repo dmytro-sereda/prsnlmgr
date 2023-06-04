@@ -11,7 +11,11 @@ import {
   updateEntryBeingEdited,
   updatePopup,
 } from "../../redux/helpers/helpers.reducer";
-import { ClaimErrors, EntryEntity } from "../../utils/interfaces";
+import {
+  ClaimErrors,
+  EntryEntity,
+  ValidationErrors,
+} from "../../utils/interfaces";
 import { selectEntryBeingEdited } from "../../redux/helpers/helpers.selector";
 import { ref, update } from "firebase/database";
 import { db } from "../../firebase";
@@ -63,8 +67,9 @@ const Entry: React.FC<Props> = ({ entry }) => {
 
   const handleEditSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     // Validate data
-    const errors: ClaimErrors = {};
-    const entrySchema = schemaFactory(errors);
+    // const errors: ClaimErrors = {};
+    const entrySchema = schemaFactory();
+    // const entrySchema = schemaFactory(errors);
 
     try {
       await entrySchema.validate(
@@ -90,8 +95,18 @@ const Entry: React.FC<Props> = ({ entry }) => {
 
       // Quit edit mode
       dispatch(updateEntryBeingEdited(""));
-    } catch (err) {
+    } catch (error: any) {
+      // Extract the error messages for the failed fields
+      const errors: ValidationErrors = {};
+
+      error.inner.forEach((err: any) => {
+        errors[err.path] = err.message;
+      });
+
+      // Render errors
       setEntryErrors(errors);
+
+      // Render popup
       dispatch(
         updatePopup({
           isError: true,

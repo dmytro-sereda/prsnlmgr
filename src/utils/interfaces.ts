@@ -39,3 +39,7 @@ export interface EntryEntity {
   id: string;
   itemName: "One more";
 }
+
+export interface ValidationErrors {
+  [key: string]: string;
+}
