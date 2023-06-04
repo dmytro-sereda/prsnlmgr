@@ -25,6 +25,10 @@ export const EntryContainer = styled.div`
     &.error {
       border: 2px solid red;
     }
+
+    &:focus-visible {
+      outline: solid 3px ${colors.primaryColor};
+    }
   }
 `;
 

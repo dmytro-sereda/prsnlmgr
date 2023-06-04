@@ -85,6 +85,10 @@ export const MonthSelect = styled.select`
   padding: 10px;
   background-color: transparent;
   border-radius: 6px 6px 0 0;
+
+  &:focus-visible {
+    outline: solid 1px ${colors.primaryColor};
+  }
 `;
 
 export const NoDataAvailableMessageContainer = styled.div`
