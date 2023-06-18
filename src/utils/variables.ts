@@ -33,7 +33,8 @@ export const monthNames = [
 
 export const barChartOptions: ChartOptions = {
   responsive: true,
-  aspectRatio: 1.5,
+  aspectRatio: 1.7,
+  // aspectRatio: 1.5,
   plugins: {
     title: {
       display: true,
