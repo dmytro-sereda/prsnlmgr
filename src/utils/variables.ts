@@ -59,3 +59,6 @@ export const colors = {
   dangerColor: "#AF0000",
   errorColor: "#E80000",
 };
+
+export const dataUnavailableMessage =
+  "Sorry. There is no data for this time period";

@@ -32,6 +32,7 @@ import { Pie, Bar } from "react-chartjs-2";
 import type { ChartData } from "chart.js";
 import {
   barChartOptions,
+  dataUnavailableMessage,
   monthNames,
   PieChartBorderColors,
   PieChartSectorColors,
@@ -53,7 +54,6 @@ const AnalyticsPage: React.FC = () => {
   const [lastMonthAmount, setLastMonthAmount] = useState(0);
   const [mostSpentCategory, setMostSpentCategory] = useState("");
   const [categoryMonth, setCategoryMonth] = useState(new Date().getMonth());
-  const [pieChartMessage, setPieChartMessage] = useState("");
   const [barChartYear, setBarChartYear] = useState(
     `${new Date().getFullYear()}`
   );
@@ -84,7 +84,6 @@ const AnalyticsPage: React.FC = () => {
       // Bar chart with amounts by months
       prepareDataForBarChart(monthsCount);
     } else {
-      setPieChartMessage("Sorry. There is no data for this time period");
       setBarChartData(undefined);
     }
 
@@ -96,11 +95,9 @@ const AnalyticsPage: React.FC = () => {
 
     // Pie chart with categories
     if (Object.values(pieChartFilteredData).length) {
-      setPieChartMessage("");
       prepareDataForPieChart(pieChartFilteredData);
     } else {
       setPieChartData(undefined);
-      setPieChartMessage("Sorry. There is no data for this time period");
     }
 
     // eslint-disable-next-line
@@ -143,15 +140,8 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const prepareDataForBarChart = (filteredData: { [key: string]: number }) => {
-    // const monthsCount = getMonthsCount();
-    // if (Object.values(monthsCount).length === 0) {
-    //   setPieChartMessage("Sorry. There is no data for this time period");
-    //   return;
-    // }
     const labels = Object.keys(filteredData);
     const chartData = Object.values(filteredData);
-    // const labels = Object.keys(monthsCount);
-    // const chartData = Object.values(monthsCount);
 
     const data = {
       labels,
@@ -269,7 +259,9 @@ const AnalyticsPage: React.FC = () => {
           </MonthSelect>
           {!pieChartData ? (
             <NoDataAvailableMessageContainer>
-              <NoDataAvailableMessage>{pieChartMessage}</NoDataAvailableMessage>
+              <NoDataAvailableMessage>
+                {dataUnavailableMessage}
+              </NoDataAvailableMessage>
             </NoDataAvailableMessageContainer>
           ) : (
             <Pie
@@ -314,7 +306,7 @@ const AnalyticsPage: React.FC = () => {
             ) : (
               <NoDataAvailableMessageContainer>
                 <NoDataAvailableMessage>
-                  {pieChartMessage}
+                  {dataUnavailableMessage}
                 </NoDataAvailableMessage>
               </NoDataAvailableMessageContainer>
             )}
