@@ -33,7 +33,8 @@ export const monthNames = [
 
 export const barChartOptions: ChartOptions = {
   responsive: true,
-  aspectRatio: 1.5,
+  aspectRatio: 1.7,
+  // aspectRatio: 1.5,
   plugins: {
     title: {
       display: true,
@@ -58,3 +59,6 @@ export const colors = {
   dangerColor: "#AF0000",
   errorColor: "#E80000",
 };
+
+export const dataUnavailableMessage =
+  "Sorry. There is no data for this time period";

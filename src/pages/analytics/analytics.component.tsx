@@ -32,6 +32,7 @@ import { Pie, Bar } from "react-chartjs-2";
 import type { ChartData } from "chart.js";
 import {
   barChartOptions,
+  dataUnavailableMessage,
   monthNames,
   PieChartBorderColors,
   PieChartSectorColors,
@@ -53,7 +54,9 @@ const AnalyticsPage: React.FC = () => {
   const [lastMonthAmount, setLastMonthAmount] = useState(0);
   const [mostSpentCategory, setMostSpentCategory] = useState("");
   const [categoryMonth, setCategoryMonth] = useState(new Date().getMonth());
-  const [pieChartMessage, setPieChartMessage] = useState("");
+  const [barChartYear, setBarChartYear] = useState(
+    `${new Date().getFullYear()}`
+  );
   const [pieChartData, setPieChartData] =
     useState<ChartData<"pie", number[], string>>();
   const [barChartData, setBarChartData] =
@@ -65,9 +68,6 @@ const AnalyticsPage: React.FC = () => {
   useEffect(() => {
     const filteredData = filterDataByMonth(new Date().getMonth());
 
-    // Bar chart with amounts by months
-    prepareDataForBarChart();
-
     // Single Value Chart with Amount Spent
     prepareLastMonthSpent(filteredData);
 
@@ -78,15 +78,26 @@ const AnalyticsPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const monthsCount = getMonthsCount();
+
+    if (Object.values(monthsCount).length) {
+      // Bar chart with amounts by months
+      prepareDataForBarChart(monthsCount);
+    } else {
+      setBarChartData(undefined);
+    }
+
+    // eslint-disable-next-line
+  }, [barChartYear]);
+
+  useEffect(() => {
     const pieChartFilteredData = filterDataByMonth(categoryMonth);
 
     // Pie chart with categories
     if (Object.values(pieChartFilteredData).length) {
-      setPieChartMessage("");
       prepareDataForPieChart(pieChartFilteredData);
     } else {
       setPieChartData(undefined);
-      setPieChartMessage("Sorry. There is no data for this time period");
     }
 
     // eslint-disable-next-line
@@ -128,20 +139,15 @@ const AnalyticsPage: React.FC = () => {
     return topFour;
   };
 
-  const prepareDataForBarChart = () => {
-    const monthsCount = getMonthsCount();
-    if (Object.values(monthsCount).length === 0) {
-      setPieChartMessage("Sorry. There is no data for this time period");
-      return;
-    }
-    const labels = Object.keys(monthsCount);
-    const chartData = Object.values(monthsCount);
+  const prepareDataForBarChart = (filteredData: { [key: string]: number }) => {
+    const labels = Object.keys(filteredData);
+    const chartData = Object.values(filteredData);
 
     const data = {
       labels,
       datasets: [
         {
-          label: "2023",
+          label: barChartYear,
           data: chartData,
           backgroundColor: "rgba(99, 87, 132, .9)",
           barThickness: 30,
@@ -178,12 +184,18 @@ const AnalyticsPage: React.FC = () => {
 
   const getMonthsCount = () => {
     const monthsCount: { [key: string]: number } = {};
-    entries.forEach((entry) => {
-      const month = new Date(entry.date).getMonth();
-      monthsCount[monthNames[month]]
-        ? (monthsCount[monthNames[month]] += entry.amountPaid)
-        : (monthsCount[monthNames[month]] = entry.amountPaid);
-    });
+    entries
+      .filter(
+        (entry) =>
+          entry.date > new Date(`01/01/${barChartYear}`).getTime() &&
+          entry.date < new Date(`12/31/${barChartYear}`).getTime()
+      )
+      .forEach((entry) => {
+        const month = new Date(entry.date).getMonth();
+        monthsCount[monthNames[month]]
+          ? (monthsCount[monthNames[month]] += entry.amountPaid)
+          : (monthsCount[monthNames[month]] = entry.amountPaid);
+      });
     return monthsCount;
   };
 
@@ -247,7 +259,9 @@ const AnalyticsPage: React.FC = () => {
           </MonthSelect>
           {!pieChartData ? (
             <NoDataAvailableMessageContainer>
-              <NoDataAvailableMessage>{pieChartMessage}</NoDataAvailableMessage>
+              <NoDataAvailableMessage>
+                {dataUnavailableMessage}
+              </NoDataAvailableMessage>
             </NoDataAvailableMessageContainer>
           ) : (
             <Pie
@@ -271,13 +285,28 @@ const AnalyticsPage: React.FC = () => {
         </MultiValueChart>
 
         <SingleAndMultiChartsContainer>
-          <MultiValueChart style={{ padding: "10px" }}>
+          <MultiValueChart>
+            <MonthSelect
+              name="categoryMonth"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                setBarChartYear(e.currentTarget.value);
+              }}
+              value={barChartYear}
+            >
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+            </MonthSelect>
             {barChartData ? (
-              <Bar data={barChartData} options={barChartOptions} />
+              <Bar
+                data={barChartData}
+                style={{ padding: "10px" }}
+                options={barChartOptions}
+              />
             ) : (
               <NoDataAvailableMessageContainer>
                 <NoDataAvailableMessage>
-                  {pieChartMessage}
+                  {dataUnavailableMessage}
                 </NoDataAvailableMessage>
               </NoDataAvailableMessageContainer>
             )}

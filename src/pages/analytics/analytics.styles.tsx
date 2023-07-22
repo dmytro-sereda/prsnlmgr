@@ -56,7 +56,8 @@ export const MultiValueChart = styled.div`
   font-weight: 300;
   animation: ${ChartAppearenceAnimation} 1s;
   padding-bottom: 10px;
-  height: auto;
+  display: flex;
+  flex-direction: column;
 
   @media only screen and (max-width: 600px) {
     max-width: 100%;
@@ -95,7 +96,8 @@ export const NoDataAvailableMessageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  flex-grow: 1;
+  min-height: 100px;
 `;
 
 export const NoDataAvailableMessage = styled.p`
