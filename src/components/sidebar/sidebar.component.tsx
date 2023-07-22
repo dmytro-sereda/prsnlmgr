@@ -19,7 +19,7 @@ const Sidebar: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
 
       <AuthorName>
         <a
-          href="https://github.com/dmytro-sereda"
+          href={process.env.REACT_APP_GITHUB_URL}
           rel="noreferrer"
           target="_blank"
         >
